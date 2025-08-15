@@ -2,6 +2,7 @@ package com.codewithudo.backend.controllers;
 
 import com.codewithudo.backend.models.LoginRequest;
 import com.codewithudo.backend.models.User;
+import com.codewithudo.backend.util.JwtTokenUtil;
 import com.codewithudo.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ public class UserController {
 
     @Autowired // New Autowired field
     private PasswordEncoder passwordEncoder;
+
+    @Autowired // New Autowired field
+    private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
@@ -46,9 +50,9 @@ public class UserController {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (passwordEncoder.matches(loginRequest.password(), user.getPasswordHash())) {
-                // Password matches, generate and return JWT
-                // JWT implementation will be in the next step
-                return new ResponseEntity<>("User logged in successfully!", HttpStatus.OK);
+                // Generate and return JWT
+                String token = jwtTokenUtil.generateToken(user.getEmail());
+                return new ResponseEntity<>(token, HttpStatus.OK);
             }
         }
         return new ResponseEntity<>("Invalid credentials.", HttpStatus.UNAUTHORIZED);
