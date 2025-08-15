@@ -1,5 +1,6 @@
 package com.codewithudo.backend.controllers;
 
+import com.codewithudo.backend.models.LoginRequest;
 import com.codewithudo.backend.models.User;
 import com.codewithudo.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -34,5 +37,20 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
+        Optional<User> userOptional = userRepository.findByEmail(loginRequest.email());
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (passwordEncoder.matches(loginRequest.password(), user.getPasswordHash())) {
+                // Password matches, generate and return JWT
+                // JWT implementation will be in the next step
+                return new ResponseEntity<>("User logged in successfully!", HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>("Invalid credentials.", HttpStatus.UNAUTHORIZED);
     }
 }
