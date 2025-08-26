@@ -28,7 +28,17 @@ public class ArtworkController {
     // PUBLIC ENDPOINTS
 
     @GetMapping
-    public List<Artwork> getAllArtworks() {
+    public List<Artwork> getAllArtworks(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String category) {
+
+        if (title != null && !title.isEmpty()) {
+            return artworkRepository.findByTitleContainingIgnoreCase(title);
+        }
+        if (category != null && !category.isEmpty()) {
+            return artworkRepository.findByCategory(category);
+        }
+        
         return artworkRepository.findAll();
     }
 

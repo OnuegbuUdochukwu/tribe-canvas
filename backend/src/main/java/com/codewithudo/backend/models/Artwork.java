@@ -30,7 +30,7 @@ public class Artwork {
     @Column(nullable = false)
     private String category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER) // Change fetch to EAGER
     @JoinColumn(name = "artist_id", nullable = false)
     private User artist;
 
