@@ -72,3 +72,50 @@ code {
     margin-bottom: 1rem;
     text-align: center;
 }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.artwork-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.artwork-card:hover {
+  transform: translateY(-5px);
+}
+
+.artwork-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+.artwork-card .card-info {
+  padding: 1rem;
+}
+
+.artwork-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.artwork-card p {
+  margin: 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.loading, .error-message, .no-artworks-message {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}
