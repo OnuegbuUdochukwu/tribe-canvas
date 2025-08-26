@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import CartContext from '../CartContext'; // New import
 
 const ProductPage = () => {
   const { id } = useParams();
   const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { addToCart } = useContext(CartContext); // Use the addToCart function
 
   useEffect(() => {
     const fetchArtwork = async () => {
@@ -47,7 +49,7 @@ const ProductPage = () => {
           <p><strong>Category:</strong> {artwork.category}</p>
           <p><strong>Uploaded On:</strong> {new Date(artwork.createdAt).toLocaleDateString()}</p>
         </div>
-        <button className="buy-button">Buy Now</button>
+        <button className="buy-button" onClick={() => addToCart(artwork)}>Add to Cart</button>
       </div>
     </div>
   );
