@@ -36,7 +36,7 @@ public class ArtworkController {
     public ResponseEntity<Artwork> getArtworkById(@PathVariable UUID id) {
         return artworkRepository.findById(id)
                 .map(artwork -> ResponseEntity.ok().body(artwork))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElse(ResponseEntity.notFound().build()); // Corrected line
     }
 
     // PROTECTED ENDPOINTS (ARTIST ROLE REQUIRED)
@@ -45,8 +45,6 @@ public class ArtworkController {
     @PreAuthorize("hasAuthority('ARTIST')")
     public ResponseEntity<Artwork> createArtwork(@RequestBody Artwork artwork) {
         try {
-            // In a real application, we would handle image upload and associate the URL
-            // and get the artist from the authenticated user
             String artistEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User artist = userRepository.findByEmail(artistEmail).orElseThrow();
 
@@ -65,13 +63,11 @@ public class ArtworkController {
     public ResponseEntity<Artwork> updateArtwork(@PathVariable UUID id, @RequestBody Artwork artworkDetails) {
         return artworkRepository.findById(id)
                 .map(artwork -> {
-                    // Check if the authenticated user is the owner of the artwork
                     String artistEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                     if (!artwork.getArtist().getEmail().equals(artistEmail)) {
-                        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                        return new ResponseEntity<Artwork>(HttpStatus.FORBIDDEN);
                     }
 
-                    // Update fields
                     artwork.setTitle(artworkDetails.getTitle());
                     artwork.setDescription(artworkDetails.getDescription());
                     artwork.setPrice(artworkDetails.getPrice());
@@ -80,7 +76,7 @@ public class ArtworkController {
                     Artwork updatedArtwork = artworkRepository.save(artwork);
                     return ResponseEntity.ok(updatedArtwork);
                 })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElse(ResponseEntity.notFound().build()); // Corrected line
     }
 
     @DeleteMapping("/{id}")
@@ -88,7 +84,6 @@ public class ArtworkController {
     public ResponseEntity<Void> deleteArtwork(@PathVariable UUID id) {
         return artworkRepository.findById(id)
                 .map(artwork -> {
-                    // Check if the authenticated user is the owner of the artwork
                     String artistEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                     if (!artwork.getArtist().getEmail().equals(artistEmail)) {
                         return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
@@ -97,6 +92,6 @@ public class ArtworkController {
                     artworkRepository.delete(artwork);
                     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
                 })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElse(ResponseEntity.notFound().build()); // Corrected line
     }
 }
