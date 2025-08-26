@@ -1,9 +1,13 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../AuthContext';
+import CartContext from '../CartContext'; // New import
 
 const NavBar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
+  const { cartItems } = useContext(CartContext); // New context hook
+
+  const totalItems = cartItems.length;
 
   return (
     <nav>
@@ -12,6 +16,9 @@ const NavBar = () => {
       </div>
       <div className="links">
         <Link to="/gallery">Gallery</Link>
+        <Link to="/cart">
+          Cart ({totalItems})
+        </Link>
         {isAuthenticated ? (
           <>
             <Link to="/dashboard">Dashboard</Link>

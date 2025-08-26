@@ -1,8 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './AuthContext';
+import { CartProvider } from './CartContext'; // New import
 import NavBar from './components/NavBar';
-import PrivateRoute from './components/PrivateRoute'; // New import
+import PrivateRoute from './components/PrivateRoute';
 import './index.css';
 
 // Placeholder pages
@@ -16,7 +17,8 @@ const ProductPage = () => <div>Product Page</div>;
 function App() {
   return (
     <AuthProvider>
-      <div className="App">
+      <CartProvider> {/* New wrapper */}
+        <div className="App">
         <NavBar />
         <main>
           <Routes>
@@ -34,6 +36,7 @@ function App() {
           </Routes>
         </main>
       </div>
+      </CartProvider>
     </AuthProvider>
   );
 }
