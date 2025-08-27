@@ -1,9 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PaystackButton } from 'react-paystack'; // New import
 import CartContext from '../CartContext';
+import AuthContext from '../AuthContext';
+import axios from 'axios';
 
 const CheckoutPage = () => {
   const { cartItems, clearCart } = useContext(CartContext);
+  const { isAuthenticated } = useContext(AuthContext); // Check if user is authenticated
   const navigate = useNavigate();
 
   const [shippingDetails, setShippingDetails] = useState({
@@ -15,6 +19,7 @@ const CheckoutPage = () => {
   });
 
   const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
+  const totalInKobo = Math.round(subtotal * 100);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,14 +28,63 @@ const CheckoutPage = () => {
       [name]: value,
     }));
   };
+  
+  // This is the callback function that Paystack will call on success
+  const handleSuccess = async (reference) => {
+    // Collect the artwork IDs from the cart
+    const artworkIds = cartItems.map(item => item.id);
 
-  const handleCheckout = (e) => {
+    try {
+      const token = localStorage.getItem('jwtToken');
+      // Send the payment reference and order details to our backend
+      await axios.post(
+        'http://localhost:8080/api/orders',
+        {
+          paymentReference: reference.reference,
+          shippingAddress: shippingDetails.address + ', ' + shippingDetails.city + ', ' + shippingDetails.postalCode,
+          artworkIds: artworkIds,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      alert('Payment successful! Your order has been placed.');
+      clearCart();
+      navigate('/gallery');
+    } catch (error) {
+      alert('Order failed. Please contact support with your payment reference.');
+      console.error('Order creation failed:', error);
+    }
+  };
+
+  const handleClose = () => {
+    alert('Payment was not completed. You can try again.');
+  };
+  
+  // Paystack configuration object
+  const paystackConfig = {
+    reference: new Date().getTime().toString(),
+    email: shippingDetails.email,
+    amount: totalInKobo, // Amount in kobo
+    publicKey: 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxx', // Replace with your actual Paystack Public Key
+    metadata: {
+      name: shippingDetails.name,
+      address: shippingDetails.address,
+    },
+    onSuccess: handleSuccess,
+    onClose: handleClose,
+  };
+
+  // We'll use a regular form submission for the shipping details, then trigger payment
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    // In the next step, we will integrate a payment gateway here
-    // For now, let's simulate a successful checkout
-    alert('Checkout successful!');
-    clearCart();
-    navigate('/gallery');
+    if (cartItems.length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+    // Form is valid, payment button will be enabled
   };
 
   return (
@@ -39,7 +93,7 @@ const CheckoutPage = () => {
       <div className="checkout-content">
         <div className="shipping-form-container">
           <h3>Shipping Information</h3>
-          <form onSubmit={handleCheckout} className="shipping-form">
+          <form onSubmit={handleFormSubmit} className="shipping-form">
             <input
               type="text"
               name="name"
@@ -80,7 +134,9 @@ const CheckoutPage = () => {
               onChange={handleInputChange}
               required
             />
-            <button type="submit" className="payment-button">Proceed to Payment</button>
+            {cartItems.length > 0 && (
+                <PaystackButton {...paystackConfig} text="Proceed to Payment" className="payment-button" />
+            )}
           </form>
         </div>
         <div className="order-summary-container">
