@@ -1,11 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './AuthContext';
-import { CartProvider } from './CartContext'; // New import
+import { CartProvider } from './CartContext';
 import NavBar from './components/NavBar';
 import PrivateRoute from './components/PrivateRoute';
 import './index.css';
 import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage'; // New import
 
 // Placeholder pages
 import HomePage from './pages/HomePage';
@@ -27,7 +28,8 @@ function App() {
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="/cart" element={<CartPage />} /> {/* New route */}
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} /> {/* New route */}
               <Route path="/dashboard" element={
                 <PrivateRoute>
                   <ArtistDashboard />
