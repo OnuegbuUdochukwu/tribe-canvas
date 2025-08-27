@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const CheckoutPage = () => {
   const { cartItems, clearCart } = useContext(CartContext);
-  const { isAuthenticated } = useContext(AuthContext); // Check if user is authenticated
+//   const { isAuthenticated } = useContext(AuthContext); // Check if user is authenticated
   const navigate = useNavigate();
 
   const [shippingDetails, setShippingDetails] = useState({
