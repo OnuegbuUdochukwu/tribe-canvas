@@ -15,8 +15,8 @@ _Checklist will be updated as implementation progresses._
 -   [x] Backend: Implement Cart model and endpoints (Cart entity, service, controller scaffolded)
 -   [x] Backend: Implement Order model and endpoints (Model, repo, service, controller scaffolded)
 -   [x] Backend: Integrate Paystack API for payments (Paystack service and payment verification endpoint scaffolded)
--   [ ] Frontend: Build buyer registration/login UI
--   [ ] Frontend: Build cart page (add/remove items, view total)
+-   [x] Frontend: Build buyer registration/login UI (Login and register pages exist and use backend endpoints)
+-   [x] Frontend: Build cart page (add/remove items, view total) (Cart page exists and supports all required actions)
 -   [ ] Frontend: Build checkout page (delivery info, payment step)
 -   [ ] Frontend: Integrate Paystack payment widget
 -   [ ] Frontend: Build order confirmation page
