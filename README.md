@@ -13,7 +13,7 @@ An online marketplace for Nigerian artworks.
 -   [x] Backend: Secure endpoints with JWT authentication (Done)
 -   [x] Frontend: Build artist registration/login UI (forms, Google/phone) (Basic form exists; Google/phone can be added later)
 -   [x] Frontend: Create artist dashboard (upload art, view portfolio, edit profile) (Basic dashboard and upload form exist)
--   [ ] Frontend: Integrate image upload to backend
+-   [x] Frontend: Integrate image upload to backend (File upload supported end-to-end)
 -   [ ] Frontend: Show earnings summary (placeholder)
 
 _Checklist will be updated as implementation progresses._
