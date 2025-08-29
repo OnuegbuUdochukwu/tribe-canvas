@@ -22,6 +22,6 @@ _Checklist will be updated as implementation progresses._
 
 -   [x] Backend: Expand Artwork model (tags, dimensions) (Done)
 -   [x] Backend: Implement endpoints for listing, filtering, and searching artworks (Done)
--   [ ] Frontend: Build gallery page (grid/list, filters/search)
+-   [x] Frontend: Build gallery page (grid/list, filters/search) (Tag and dimensions filters added)
 -   [ ] Frontend: Build artwork detail page (preview, price, add-to-cart, artist info)
 -   [ ] Frontend: Build/expand home page (carousel, categories, featured artists)
