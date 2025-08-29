@@ -30,9 +30,16 @@ public class Artwork {
     @Column(nullable = false)
     private String category;
 
-    @ManyToOne(fetch = FetchType.EAGER) // Change fetch to EAGER
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "artist_id", nullable = false)
     private User artist;
+
+    // New fields for catalog & filtering
+    @Column(length = 255)
+    private String tags; // Comma-separated tags (e.g. "abstract,modern,blue")
+
+    @Column(length = 100)
+    private String dimensions; // e.g. "24x36 inches" or "60x90 cm"
 
     private LocalDateTime createdAt;
 
