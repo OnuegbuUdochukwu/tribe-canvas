@@ -9,7 +9,7 @@ An online marketplace for Nigerian artworks.
 -   [x] Backend: Add endpoints for artist profile management (bio, payout details) (Done)
 -   [x] Backend: Create/expand `Artwork` model, repository, and service (Done)
 -   [x] Backend: Implement artwork upload endpoint (image, metadata) (Done)
--   [ ] Backend: Integrate AWS S3 for image storage
+-   [x] Backend: Integrate AWS S3 for image storage (S3Service scaffolded, dependency added)
 -   [ ] Backend: Secure endpoints with JWT authentication
 -   [ ] Frontend: Build artist registration/login UI (forms, Google/phone)
 -   [ ] Frontend: Create artist dashboard (upload art, view portfolio, edit profile)
