@@ -10,6 +10,7 @@ import java.util.UUID;
 @Repository
 public interface ArtworkRepository extends JpaRepository<Artwork, UUID> {
 
+
     // Custom query to find all artworks by a specific artist
     List<Artwork> findByArtist_Id(UUID artistId);
 
@@ -18,5 +19,11 @@ public interface ArtworkRepository extends JpaRepository<Artwork, UUID> {
 
     // Custom query to find artworks by title (case-insensitive search)
     List<Artwork> findByTitleContainingIgnoreCase(String title);
+
+    // Custom query to find artworks by tags (comma-separated, case-insensitive)
+    List<Artwork> findByTagsContainingIgnoreCase(String tag);
+
+    // Custom query to find artworks by dimensions (exact match or partial)
+    List<Artwork> findByDimensionsContainingIgnoreCase(String dimensions);
 
 }

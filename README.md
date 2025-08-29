@@ -21,7 +21,7 @@ _Checklist will be updated as implementation progresses._
 ## Phase 2.2: Artwork Catalog & Browsing Checklist
 
 -   [x] Backend: Expand Artwork model (tags, dimensions) (Done)
--   [ ] Backend: Implement endpoints for listing, filtering, and searching artworks
+-   [x] Backend: Implement endpoints for listing, filtering, and searching artworks (Done)
 -   [ ] Frontend: Build gallery page (grid/list, filters/search)
 -   [ ] Frontend: Build artwork detail page (preview, price, add-to-cart, artist info)
 -   [ ] Frontend: Build/expand home page (carousel, categories, featured artists)

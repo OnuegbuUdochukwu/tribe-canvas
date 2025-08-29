@@ -30,15 +30,26 @@ public class ArtworkController {
     @GetMapping
     public List<Artwork> getAllArtworks(
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) String category) {
-
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String tag,
+            @RequestParam(required = false) String dimensions,
+            @RequestParam(required = false) UUID artistId
+    ) {
         if (title != null && !title.isEmpty()) {
             return artworkRepository.findByTitleContainingIgnoreCase(title);
         }
         if (category != null && !category.isEmpty()) {
             return artworkRepository.findByCategory(category);
         }
-        
+        if (tag != null && !tag.isEmpty()) {
+            return artworkRepository.findByTagsContainingIgnoreCase(tag);
+        }
+        if (dimensions != null && !dimensions.isEmpty()) {
+            return artworkRepository.findByDimensionsContainingIgnoreCase(dimensions);
+        }
+        if (artistId != null) {
+            return artworkRepository.findByArtist_Id(artistId);
+        }
         return artworkRepository.findAll();
     }
 
