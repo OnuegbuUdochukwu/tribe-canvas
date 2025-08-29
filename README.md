@@ -10,6 +10,4 @@ _Checklist will be updated as implementation progresses._
 
 ## Phase 2.3: Buyer Auth, Cart, and Checkout Checklist
 
-    [x] Backend: Create Buyer model, repository, and service (User model is used for buyers)
-
--   [ ] Backend: Create Buyer model, repository, and service
+-   [x] Backend: Implement Order model and endpoints (Model, repo, service, controller scaffolded)
