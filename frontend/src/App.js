@@ -7,6 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 import './index.css';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage'; // New import
+import OrderHistoryPage from './pages/OrderHistoryPage';
 
 // Placeholder pages
 import HomePage from './pages/HomePage';
@@ -30,6 +31,7 @@ function App() {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} /> {/* New route */}
+              <Route path="/orders" element={<OrderHistoryPage />} />
               <Route path="/dashboard" element={
                 <PrivateRoute>
                   <ArtistDashboard />
