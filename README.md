@@ -33,6 +33,6 @@ _Checklist will be updated as implementation progresses._
 
 **Frontend**
 
--   [ ] Artist dashboard: show earnings summary
--   [ ] Artist dashboard: payout request form
--   [ ] Artist dashboard: payout history table
+-   [x] Artist dashboard: show earnings summary
+-   [x] Artist dashboard: payout request form
+-   [x] Artist dashboard: payout history table
