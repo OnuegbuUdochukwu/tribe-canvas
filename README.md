@@ -23,11 +23,16 @@ _Checklist will be updated as implementation progresses._
 
 ---
 
-## Phase 3.1: Automated Fulfillment Routing Checklist
+## Phase 3.2: Artist Commission & Payouts Checklist
 
--   [x] Add Phase 3.1 checklist to README
--   [x] Backend: Create FulfillmentPartner model (id, name, webhookUrl, etc.)
--   [x] Backend: Create FulfillmentPartnerRepository and FulfillmentPartnerService
--   [x] Backend: On order paid, trigger webhook to fulfillment partner with order/artwork details
--   [x] Backend: Add order status updates: pending, in production, shipped, delivered
--   [x] Backend: Update Order model and endpoints to support status changes
+-   [x] Implement commission engine to calculate artist share per order
+-   [ ] Create `Payout` model (id, artistId, orderId, amount, status)
+-   [ ] Create `PayoutRepository` and `PayoutService`
+-   [ ] Endpoints: get artist earnings, request payout, payout status
+-   [ ] Integrate with payment API for payouts (manual or automated)
+
+**Frontend**
+
+-   [ ] Artist dashboard: show earnings summary
+-   [ ] Artist dashboard: payout request form
+-   [ ] Artist dashboard: payout history table
