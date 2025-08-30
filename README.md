@@ -26,8 +26,8 @@ _Checklist will be updated as implementation progresses._
 ## Phase 3.1: Automated Fulfillment Routing Checklist
 
 -   [x] Add Phase 3.1 checklist to README
--   [ ] Backend: Create FulfillmentPartner model (id, name, webhookUrl, etc.)
--   [ ] Backend: Create FulfillmentPartnerRepository and FulfillmentPartnerService
+-   [x] Backend: Create FulfillmentPartner model (id, name, webhookUrl, etc.)
+-   [x] Backend: Create FulfillmentPartnerRepository and FulfillmentPartnerService
 -   [ ] Backend: On order paid, trigger webhook to fulfillment partner with order/artwork details
 -   [ ] Backend: Add order status updates: pending, in production, shipped, delivered
 -   [ ] Backend: Update Order model and endpoints to support status changes
