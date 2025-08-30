@@ -17,6 +17,6 @@ _Checklist will be updated as implementation progresses._
 -   [x] Backend: Integrate Paystack API for payments (Paystack service and payment verification endpoint scaffolded)
 -   [x] Frontend: Build buyer registration/login UI (Login and register pages exist and use backend endpoints)
 -   [x] Frontend: Build cart page (add/remove items, view total) (Cart page exists and supports all required actions)
--   [ ] Frontend: Build checkout page (delivery info, payment step)
--   [ ] Frontend: Integrate Paystack payment widget
--   [ ] Frontend: Build order confirmation page
+-   [x] Frontend: Build checkout page (delivery info, payment step) (Checkout page exists with delivery info and payment step)
+-   [x] Frontend: Integrate Paystack payment widget (PaystackButton integrated in checkout page)
+-   [x] Frontend: Build order confirmation page (OrderConfirmationPage component created)
