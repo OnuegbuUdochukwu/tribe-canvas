@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -103,8 +104,9 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/{orderId}/status")
-    public ResponseEntity<Order> updateOrderStatus(@PathVariable("orderId") String orderId, @RequestBody String status) {
+    // Get order status and trackingId by order ID (for buyer)
+    @GetMapping("/{orderId}/status")
+    public ResponseEntity<?> getOrderStatus(@PathVariable("orderId") String orderId) {
         try {
             java.util.UUID uuid = java.util.UUID.fromString(orderId);
             Optional<Order> orderOpt = orderRepository.findById(uuid);
@@ -112,8 +114,31 @@ public class OrderController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             Order order = orderOpt.get();
-            Order.Status newStatus = Order.Status.valueOf(status.toUpperCase());
-            order.setStatus(newStatus);
+            return ResponseEntity.ok(new java.util.HashMap<String, Object>() {{
+                put("status", order.getStatus());
+                put("trackingId", order.getTrackingId());
+            }});
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // Update order status and trackingId (for fulfillment partner/admin)
+    @PutMapping("/{orderId}/status")
+    public ResponseEntity<Order> updateOrderStatusAndTracking(@PathVariable("orderId") String orderId, @RequestBody java.util.Map<String, String> payload) {
+        try {
+            java.util.UUID uuid = java.util.UUID.fromString(orderId);
+            Optional<Order> orderOpt = orderRepository.findById(uuid);
+            if (orderOpt.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            Order order = orderOpt.get();
+            if (payload.containsKey("status")) {
+                order.setStatus(Order.Status.valueOf(payload.get("status").toUpperCase()));
+            }
+            if (payload.containsKey("trackingId")) {
+                order.setTrackingId(payload.get("trackingId"));
+            }
             Order updatedOrder = orderRepository.save(order);
             return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
         } catch (Exception e) {
