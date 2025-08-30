@@ -2,6 +2,11 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../AuthContext";
 
+const getTrackingUrl = (trackingId) => {
+    if (!trackingId) return null;
+    return `https://mockdelivery.com/track/${trackingId}`;
+};
+
 const OrderHistoryPage = () => {
     const { user } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
@@ -37,6 +42,7 @@ const OrderHistoryPage = () => {
                             <th>Order ID</th>
                             <th>Date</th>
                             <th>Status</th>
+                            <th>Tracking</th>
                             <th>Total</th>
                         </tr>
                     </thead>
@@ -60,6 +66,23 @@ const OrderHistoryPage = () => {
                                                   c.toUpperCase()
                                               )
                                         : "-"}
+                                </td>
+                                <td>
+                                    {order.trackingId ? (
+                                        <a
+                                            href={getTrackingUrl(
+                                                order.trackingId
+                                            )}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {order.trackingId}
+                                        </a>
+                                    ) : (
+                                        <span style={{ color: "#888" }}>
+                                            Not assigned
+                                        </span>
+                                    )}
                                 </td>
                                 <td>₦{order.totalAmount}</td>
                             </tr>
