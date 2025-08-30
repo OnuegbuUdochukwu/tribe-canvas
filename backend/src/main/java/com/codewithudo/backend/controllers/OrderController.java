@@ -5,6 +5,10 @@ import com.codewithudo.backend.repositories.ArtworkRepository;
 import com.codewithudo.backend.repositories.OrderRepository;
 import com.codewithudo.backend.repositories.UserRepository;
 import com.codewithudo.backend.services.PaystackService;
+import com.codewithudo.backend.services.FulfillmentPartnerService;
+import com.codewithudo.backend.models.FulfillmentPartner;
+import com.codewithudo.backend.util.WebhookUtil;
+import com.codewithudo.backend.payload.FulfillmentWebhookPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +37,12 @@ public class OrderController {
 
     @Autowired
     private PaystackService paystackService;
+
+    @Autowired
+    private FulfillmentPartnerService fulfillmentPartnerService;
+
+    @Autowired
+    private WebhookUtil webhookUtil;
 
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody CheckoutRequest request) {
@@ -75,6 +85,14 @@ public class OrderController {
             newOrder.setArtworks(artworks);
 
             Order savedOrder = orderRepository.save(newOrder);
+
+            // Step 6: Trigger webhook to fulfillment partner
+            List<FulfillmentPartner> partners = fulfillmentPartnerService.getAllPartners();
+            if (!partners.isEmpty()) {
+                FulfillmentPartner partner = partners.get(0); // For now, pick the first partner
+                FulfillmentWebhookPayload payload = new FulfillmentWebhookPayload(partner.getId(), savedOrder);
+                webhookUtil.sendWebhook(partner.getWebhookUrl(), payload);
+            }
 
             return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
 
