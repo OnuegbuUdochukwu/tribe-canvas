@@ -26,7 +26,7 @@ _Checklist will be updated as implementation progresses._
 ## Phase 3.2: Artist Commission & Payouts Checklist
 
 -   [x] Implement commission engine to calculate artist share per order
--   [ ] Create `Payout` model (id, artistId, orderId, amount, status)
+-   [x] Create `Payout` model (id, artistId, orderId, amount, status)
 -   [ ] Create `PayoutRepository` and `PayoutService`
 -   [ ] Endpoints: get artist earnings, request payout, payout status
 -   [ ] Integrate with payment API for payouts (manual or automated)
