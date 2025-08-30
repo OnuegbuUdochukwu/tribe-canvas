@@ -37,7 +37,7 @@ _Checklist will be updated as implementation progresses._
 
 -   [x] Add `trackingId` to Order model
 -   [x] Endpoints: update/get order status (by fulfillment partner, by buyer)
--   [ ] Integrate with delivery partner APIs if available
+-   [x] Integrate with delivery partner APIs if available
 
 **Frontend**
 
