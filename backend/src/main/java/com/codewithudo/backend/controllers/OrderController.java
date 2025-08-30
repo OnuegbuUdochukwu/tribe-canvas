@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -98,6 +100,24 @@ public class OrderController {
 
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{orderId}/status")
+    public ResponseEntity<Order> updateOrderStatus(@PathVariable("orderId") String orderId, @RequestBody String status) {
+        try {
+            java.util.UUID uuid = java.util.UUID.fromString(orderId);
+            Optional<Order> orderOpt = orderRepository.findById(uuid);
+            if (orderOpt.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            Order order = orderOpt.get();
+            Order.Status newStatus = Order.Status.valueOf(status.toUpperCase());
+            order.setStatus(newStatus);
+            Order updatedOrder = orderRepository.save(order);
+            return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -30,4 +30,4 @@ _Checklist will be updated as implementation progresses._
 -   [x] Backend: Create FulfillmentPartnerRepository and FulfillmentPartnerService
 -   [x] Backend: On order paid, trigger webhook to fulfillment partner with order/artwork details
 -   [x] Backend: Add order status updates: pending, in production, shipped, delivered
--   [ ] Backend: Update Order model and endpoints to support status changes
+-   [x] Backend: Update Order model and endpoints to support status changes
