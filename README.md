@@ -41,5 +41,5 @@ _Checklist will be updated as implementation progresses._
 
 **Frontend**
 
--   [ ] Buyer profile: show order history
--   [ ] Buyer profile: show order status and tracking info
+-   [x] Buyer profile: show order history
+-   [x] Buyer profile: show order status and tracking info
