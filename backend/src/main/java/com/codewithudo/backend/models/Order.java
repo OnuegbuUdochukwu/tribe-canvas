@@ -47,6 +47,10 @@ public class Order {
     )
     private List<Artwork> artworks;
 
+
+    @Column(length = 64)
+    private String trackingId;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status = Status.PENDING;

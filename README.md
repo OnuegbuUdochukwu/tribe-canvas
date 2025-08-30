@@ -31,8 +31,15 @@ _Checklist will be updated as implementation progresses._
 -   [x] Endpoints: get artist earnings, request payout, payout status
 -   [x] Integrate with payment API for payouts (manual or automated)
 
+## Phase 3.3: Order Tracking Checklist
+
+**Backend**
+
+-   [x] Add `trackingId` to Order model
+-   [ ] Endpoints: update/get order status (by fulfillment partner, by buyer)
+-   [ ] Integrate with delivery partner APIs if available
+
 **Frontend**
 
--   [x] Artist dashboard: show earnings summary
--   [x] Artist dashboard: payout request form
--   [x] Artist dashboard: payout history table
+-   [ ] Buyer profile: show order history
+-   [ ] Buyer profile: show order status and tracking info
