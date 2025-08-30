@@ -20,3 +20,14 @@ _Checklist will be updated as implementation progresses._
 -   [x] Frontend: Build checkout page (delivery info, payment step) (Checkout page exists with delivery info and payment step)
 -   [x] Frontend: Integrate Paystack payment widget (PaystackButton integrated in checkout page)
 -   [x] Frontend: Build order confirmation page (OrderConfirmationPage component created)
+
+---
+
+## Phase 3.1: Automated Fulfillment Routing Checklist
+
+-   [x] Add Phase 3.1 checklist to README
+-   [ ] Backend: Create FulfillmentPartner model (id, name, webhookUrl, etc.)
+-   [ ] Backend: Create FulfillmentPartnerRepository and FulfillmentPartnerService
+-   [ ] Backend: On order paid, trigger webhook to fulfillment partner with order/artwork details
+-   [ ] Backend: Add order status updates: pending, in production, shipped, delivered
+-   [ ] Backend: Update Order model and endpoints to support status changes
