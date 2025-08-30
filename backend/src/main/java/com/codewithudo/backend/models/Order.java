@@ -12,6 +12,13 @@ import java.util.UUID;
 @Data
 public class Order {
 
+    public enum Status {
+        PENDING,
+        IN_PRODUCTION,
+        SHIPPED,
+        DELIVERED
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -40,10 +47,17 @@ public class Order {
     )
     private List<Artwork> artworks;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status = Status.PENDING;
+
     private LocalDateTime orderDate;
 
     @PrePersist
     protected void onCreate() {
         this.orderDate = LocalDateTime.now();
+        if (this.status == null) {
+            this.status = Status.PENDING;
+        }
     }
 }
