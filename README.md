@@ -27,7 +27,7 @@ _Checklist will be updated as implementation progresses._
 
 -   [x] Implement commission engine to calculate artist share per order
 -   [x] Create `Payout` model (id, artistId, orderId, amount, status)
--   [ ] Create `PayoutRepository` and `PayoutService`
+-   [x] Create `PayoutRepository` and `PayoutService`
 -   [ ] Endpoints: get artist earnings, request payout, payout status
 -   [ ] Integrate with payment API for payouts (manual or automated)
 
