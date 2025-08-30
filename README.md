@@ -29,7 +29,7 @@ _Checklist will be updated as implementation progresses._
 -   [x] Create `Payout` model (id, artistId, orderId, amount, status)
 -   [x] Create `PayoutRepository` and `PayoutService`
 -   [x] Endpoints: get artist earnings, request payout, payout status
--   [ ] Integrate with payment API for payouts (manual or automated)
+-   [x] Integrate with payment API for payouts (manual or automated)
 
 **Frontend**
 
