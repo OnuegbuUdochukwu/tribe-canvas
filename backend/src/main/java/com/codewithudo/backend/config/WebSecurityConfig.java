@@ -44,7 +44,10 @@ public class WebSecurityConfig {
                 "/api/users/register",
                 "/api/users/login",
                 "/api/artists/register",
-                "/api/artists/{id}"
+                "/api/artists/{id}",
+                "/api/artworks",
+                "/api/artworks/artist/**",
+                "/api/artworks/category/**"
             ).permitAll()
             .anyRequest().authenticated()
         )

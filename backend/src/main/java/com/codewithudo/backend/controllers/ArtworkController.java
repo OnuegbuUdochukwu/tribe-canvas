@@ -1,3 +1,4 @@
+// (removed misplaced endpoints, correct ones are inside the class)
 package com.codewithudo.backend.controllers;
 
 import com.codewithudo.backend.models.Artwork;
@@ -53,6 +54,18 @@ public class ArtworkController {
         return artworkRepository.findAll();
     }
 
+    // List artworks by artist
+    @GetMapping("/artist/{artistId}")
+    public List<Artwork> getArtworksByArtist(@PathVariable UUID artistId) {
+        return artworkRepository.findByArtist_Id(artistId);
+    }
+
+    // List artworks by category
+    @GetMapping("/category/{category}")
+    public List<Artwork> getArtworksByCategory(@PathVariable String category) {
+        return artworkRepository.findByCategory(category);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Artwork> getArtworkById(@PathVariable UUID id) {
         return artworkRepository.findById(id)
@@ -66,7 +79,15 @@ public class ArtworkController {
     @PreAuthorize("hasAuthority('ARTIST')")
     public ResponseEntity<Artwork> createArtwork(@RequestBody Artwork artwork) {
         try {
-            String artistEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String artistEmail;
+            if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
+                artistEmail = ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+            } else if (principal instanceof String) {
+                artistEmail = (String) principal;
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
             User artist = userRepository.findByEmail(artistEmail).orElseThrow();
 
             artwork.setArtist(artist);
@@ -84,7 +105,15 @@ public class ArtworkController {
     public ResponseEntity<Artwork> updateArtwork(@PathVariable UUID id, @RequestBody Artwork artworkDetails) {
         return artworkRepository.findById(id)
                 .map(artwork -> {
-                    String artistEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    String artistEmail;
+                    if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
+                        artistEmail = ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+                    } else if (principal instanceof String) {
+                        artistEmail = (String) principal;
+                    } else {
+                        return new ResponseEntity<Artwork>(HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
                     if (!artwork.getArtist().getEmail().equals(artistEmail)) {
                         return new ResponseEntity<Artwork>(HttpStatus.FORBIDDEN);
                     }
@@ -105,7 +134,15 @@ public class ArtworkController {
     public ResponseEntity<Void> deleteArtwork(@PathVariable UUID id) {
         return artworkRepository.findById(id)
                 .map(artwork -> {
-                    String artistEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    String artistEmail;
+                    if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
+                        artistEmail = ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+                    } else if (principal instanceof String) {
+                        artistEmail = (String) principal;
+                    } else {
+                        return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
                     if (!artwork.getArtist().getEmail().equals(artistEmail)) {
                         return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
                     }
