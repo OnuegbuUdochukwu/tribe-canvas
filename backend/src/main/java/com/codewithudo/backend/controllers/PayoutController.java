@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -26,7 +28,14 @@ public class PayoutController {
     // Get all payouts for the authenticated artist
     @GetMapping("/artist")
     public ResponseEntity<List<Payout>> getArtistPayouts() {
-        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = null;
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails) principal).getUsername();
+        } else if (principal instanceof String) {
+            email = (String) principal;
+        }
         User artist = userRepository.findByEmail(email).orElseThrow();
         List<Payout> payouts = payoutService.getPayoutsByArtist(artist);
         return ResponseEntity.ok(payouts);
@@ -35,7 +44,14 @@ public class PayoutController {
     // Get artist earnings summary (total paid + pending)
     @GetMapping("/artist/earnings")
     public ResponseEntity<BigDecimal> getArtistEarnings() {
-        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = null;
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails) principal).getUsername();
+        } else if (principal instanceof String) {
+            email = (String) principal;
+        }
         User artist = userRepository.findByEmail(email).orElseThrow();
         List<Payout> payouts = payoutService.getPayoutsByArtist(artist);
         BigDecimal total = payouts.stream()
@@ -48,7 +64,14 @@ public class PayoutController {
     // Request a payout (artist triggers this)
     @PostMapping("/artist/request")
     public ResponseEntity<Payout> requestPayout(@RequestBody Payout payout) {
-        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = null;
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails) principal).getUsername();
+        } else if (principal instanceof String) {
+            email = (String) principal;
+        }
         User artist = userRepository.findByEmail(email).orElseThrow();
         payout.setArtist(artist);
         payout.setStatus(Payout.Status.PENDING);

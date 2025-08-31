@@ -1,3 +1,4 @@
+
 package com.codewithudo.backend.controllers;
 
 import com.codewithudo.backend.models.*;
@@ -28,6 +29,14 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
+    // Get all orders for the authenticated artist
+    @GetMapping("/artist")
+    public ResponseEntity<List<Order>> getOrdersForArtist() {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User artist = userRepository.findByEmail(email).orElseThrow();
+        List<Order> orders = orderRepository.findByArtworks_Artist(artist);
+        return ResponseEntity.ok(orders);
+    }
 
     @Autowired
     private OrderRepository orderRepository;
