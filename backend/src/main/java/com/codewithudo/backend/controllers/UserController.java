@@ -15,6 +15,20 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+    @GetMapping("/me")
+    public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
+        // Extract JWT token from header
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        String token = authHeader.substring(7);
+        String email = jwtTokenUtil.getUsernameFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        return userOpt.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
     @Autowired
     private UserRepository userRepository;

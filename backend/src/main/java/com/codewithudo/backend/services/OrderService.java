@@ -20,7 +20,7 @@ public class OrderService {
 
     public List<Order> getOrdersByBuyerId(UUID buyerId) {
         User buyer = userRepository.findById(buyerId).orElseThrow();
-        return orderRepository.findByBuyer(buyer);
+        return orderRepository.findByCustomer(buyer);
     }
 
     public Optional<Order> getOrderById(UUID orderId) {
