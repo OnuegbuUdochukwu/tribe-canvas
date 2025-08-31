@@ -13,6 +13,8 @@ import com.codewithudo.backend.payload.FulfillmentWebhookPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +31,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
+    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
     // Get all orders for the authenticated artist
     @GetMapping("/artist")
     public ResponseEntity<List<Order>> getOrdersForArtist() {
@@ -67,7 +70,13 @@ public class OrderController {
             }
 
             // Step 2: Get customer details from authenticated user
-            String customerEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String customerEmail;
+            if (principal instanceof org.springframework.security.core.userdetails.User userDetails) {
+                customerEmail = userDetails.getUsername();
+            } else {
+                customerEmail = principal.toString();
+            }
             User customer = userRepository.findByEmail(customerEmail).orElseThrow();
 
             // Step 3: Get artworks from the request
@@ -109,6 +118,7 @@ public class OrderController {
             return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
 
         } catch (Exception e) {
+            logger.error("Order creation failed", e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

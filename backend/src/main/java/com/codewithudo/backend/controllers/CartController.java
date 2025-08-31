@@ -10,11 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.codewithudo.backend.models.User;
+import com.codewithudo.backend.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // Get current user's cart
     @GetMapping
@@ -48,11 +55,16 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
-    // Helper to get current user ID from security context (assumes principal is email)
+    // Helper to get current user ID from security context (principal is org.springframework.security.core.userdetails.User)
     private UUID getCurrentUserId() {
-        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        // ...fetch user by email and return ID...
-        // This is a placeholder; you may want to inject UserRepository here for real lookup
-        return null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email;
+        if (principal instanceof org.springframework.security.core.userdetails.User userDetails) {
+            email = userDetails.getUsername();
+        } else {
+            email = principal.toString();
+        }
+        User user = userRepository.findByEmail(email).orElseThrow();
+        return user.getId();
     }
 }
