@@ -13,10 +13,15 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -30,6 +35,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         final String requestTokenHeader = request.getHeader("Authorization");
 
+        logger.debug("JwtRequestFilter: Authorization header: {}", requestTokenHeader);
+        logger.debug("JwtRequestFilter: Request URI: {} Method: {}", request.getRequestURI(), request.getMethod());
+
         String username = null;
         String jwtToken = null;
 
@@ -37,7 +45,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwtToken = requestTokenHeader.substring(7);
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+                logger.debug("JwtRequestFilter: Extracted username from token: {}", username);
             } catch (Exception e) {
+                logger.warn("JwtRequestFilter: Exception extracting username from token: {}", e.getMessage());
                 // Token is expired or invalid
             }
         }
@@ -45,14 +55,24 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
+            logger.debug("JwtRequestFilter: Loaded user details for {}: {}", username, userDetails != null);
+            logger.debug("JwtRequestFilter: User authorities: {}", userDetails.getAuthorities());
+
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+                logger.debug("JwtRequestFilter: Token validated for user {}", username);
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            } else {
+                logger.warn("JwtRequestFilter: Token validation failed for user {}", username);
             }
         }
+        if (username == null) {
+            logger.warn("JwtRequestFilter: No username extracted from token, or token missing.");
+        }
         chain.doFilter(request, response);
+        logger.debug("JwtRequestFilter: Response status after filter: {}", response.getStatus());
     }
 }

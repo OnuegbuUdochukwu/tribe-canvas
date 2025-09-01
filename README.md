@@ -1,3 +1,10 @@
+    - [x] Artist dashboard: earnings & payouts endpoints (unauthorized access integration tests) ✅ (Tests passed)
+    - [x] Artist dashboard: fetch artist orders (integration test) ✅ (Test passed)
+
+## Backend Testing Checklist
+
+-   [x] Artist registration (ArtistController), Artist profile fetch/update (integration test) ✅ (Test passed)
+
 # tribe-canvas
 
 An online marketplace for Nigerian artworks.

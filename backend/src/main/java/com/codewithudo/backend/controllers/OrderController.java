@@ -1,4 +1,3 @@
-
 package com.codewithudo.backend.controllers;
 
 import com.codewithudo.backend.models.*;
@@ -41,6 +40,21 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
+    // Get all orders for the authenticated user (buyer)
+    @GetMapping("/user")
+    public ResponseEntity<List<Order>> getOrdersForUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email;
+        if (principal instanceof org.springframework.security.core.userdetails.User userDetails) {
+            email = userDetails.getUsername();
+        } else {
+            email = principal.toString();
+        }
+        User user = userRepository.findByEmail(email).orElseThrow();
+        List<Order> orders = orderRepository.findByCustomer(user);
+        return ResponseEntity.ok(orders);
+    }
+
     @Autowired
     private OrderRepository orderRepository;
 
@@ -63,21 +77,30 @@ public class OrderController {
     public ResponseEntity<Order> createOrder(@RequestBody CheckoutRequest request) {
         try {
             // Step 1: Verify the payment with Paystack
+            logger.debug("[OrderController] Entered createOrder endpoint");
             PaystackVerificationResponse verification = paystackService.verifyTransaction(request.getPaymentReference());
 
             if (verification == null || !verification.isStatus() || !verification.getData().getStatus().equals("success")) {
+                logger.debug("[OrderController] Paystack verification failed: {}", verification);
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
 
             // Step 2: Get customer details from authenticated user
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            logger.debug("[OrderController] Principal type: {} value: {}", principal.getClass().getName(), principal);
             String customerEmail;
             if (principal instanceof org.springframework.security.core.userdetails.User userDetails) {
                 customerEmail = userDetails.getUsername();
             } else {
                 customerEmail = principal.toString();
             }
-            User customer = userRepository.findByEmail(customerEmail).orElseThrow();
+            logger.debug("[OrderController] Using customerEmail: {}", customerEmail);
+            User customer = userRepository.findByEmail(customerEmail).orElse(null);
+            logger.debug("[OrderController] User lookup result: {}", customer);
+            if (customer == null) {
+                logger.debug("[OrderController] User not found for email: {}", customerEmail);
+                return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+            }
 
             // Step 3: Get artworks from the request
             List<Artwork> artworks = artworkRepository.findAllById(request.getArtworkIds());
@@ -160,6 +183,34 @@ public class OrderController {
             }
             Order updatedOrder = orderRepository.save(order);
             return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // Get order details by order ID (for buyer)
+    @GetMapping("/{orderId}")
+    public ResponseEntity<Order> getOrderById(@PathVariable("orderId") String orderId) {
+        try {
+            java.util.UUID uuid = java.util.UUID.fromString(orderId);
+            Optional<Order> orderOpt = orderRepository.findById(uuid);
+            if (orderOpt.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            Order order = orderOpt.get();
+            // Optionally, check if the authenticated user is the customer or artist for this order
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String email;
+            if (principal instanceof org.springframework.security.core.userdetails.User userDetails) {
+                email = userDetails.getUsername();
+            } else {
+                email = principal.toString();
+            }
+            // Only allow access if the user is the customer or the artist of any artwork in the order
+            if (!order.getCustomerEmail().equals(email) && order.getArtworks().stream().noneMatch(a -> a.getArtist().getEmail().equals(email))) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            return ResponseEntity.ok(order);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

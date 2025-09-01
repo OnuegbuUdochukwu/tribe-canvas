@@ -89,4 +89,75 @@ public class OrderControllerIntegrationTest {
         assertEquals(buyer.getEmail(), responseEntity.getBody().getCustomerEmail());
         assertEquals(1, responseEntity.getBody().getArtworks().size());
     }
+
+    @Test
+    void testOrderDetailsFetchById() {
+        // Mock PaystackService to always return a successful verification
+        PaystackVerificationResponse.PaystackTransactionData data = new PaystackVerificationResponse.PaystackTransactionData();
+        data.setStatus("success");
+        data.setAmount(10000); // 100.00 in Naira (Paystack returns kobo)
+        PaystackVerificationResponse paystackResponse = new PaystackVerificationResponse();
+        paystackResponse.setStatus(true);
+        paystackResponse.setData(data);
+        Mockito.when(paystackService.verifyTransaction(Mockito.anyString())).thenReturn(paystackResponse);
+
+        // 1. Create order
+        String url = "http://localhost:" + port + "/api/orders";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        CheckoutRequest req = new CheckoutRequest();
+        req.setPaymentReference("test-ref");
+        req.setShippingAddress("123 Test St");
+        req.setArtworkIds(List.of(artwork.getId()));
+        HttpEntity<CheckoutRequest> request = new HttpEntity<>(req, headers);
+        ResponseEntity<Order> createResponse = restTemplate.postForEntity(url, request, Order.class);
+        assertEquals(HttpStatus.CREATED, createResponse.getStatusCode());
+        assertNotNull(createResponse.getBody());
+        String orderId = createResponse.getBody().getId().toString();
+
+        // 2. Fetch order details by ID
+        String detailsUrl = "http://localhost:" + port + "/api/orders/" + orderId;
+        HttpEntity<Void> getRequest = new HttpEntity<>(headers);
+        ResponseEntity<Order> detailsResponse = restTemplate.exchange(detailsUrl, HttpMethod.GET, getRequest, Order.class);
+        assertEquals(HttpStatus.OK, detailsResponse.getStatusCode());
+        assertNotNull(detailsResponse.getBody());
+        assertEquals(orderId, detailsResponse.getBody().getId().toString());
+        assertEquals(buyer.getEmail(), detailsResponse.getBody().getCustomerEmail());
+    }
+
+    @Test
+    void testOrderTrackingInfo() {
+        // Mock PaystackService to always return a successful verification
+        PaystackVerificationResponse.PaystackTransactionData data = new PaystackVerificationResponse.PaystackTransactionData();
+        data.setStatus("success");
+        data.setAmount(10000); // 100.00 in Naira (Paystack returns kobo)
+        PaystackVerificationResponse paystackResponse = new PaystackVerificationResponse();
+        paystackResponse.setStatus(true);
+        paystackResponse.setData(data);
+        Mockito.when(paystackService.verifyTransaction(Mockito.anyString())).thenReturn(paystackResponse);
+
+        // 1. Create order
+        String url = "http://localhost:" + port + "/api/orders";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        CheckoutRequest req = new CheckoutRequest();
+        req.setPaymentReference("test-ref");
+        req.setShippingAddress("123 Test St");
+        req.setArtworkIds(List.of(artwork.getId()));
+        HttpEntity<CheckoutRequest> request = new HttpEntity<>(req, headers);
+        ResponseEntity<Order> createResponse = restTemplate.postForEntity(url, request, Order.class);
+        assertEquals(HttpStatus.CREATED, createResponse.getStatusCode());
+        assertNotNull(createResponse.getBody());
+        String orderId = createResponse.getBody().getId().toString();
+
+        // 2. Fetch order tracking info
+        String trackingUrl = "http://localhost:" + port + "/api/orders/" + orderId + "/status";
+        HttpEntity<Void> getRequest = new HttpEntity<>(headers);
+        ResponseEntity<Map> trackingResponse = restTemplate.exchange(trackingUrl, HttpMethod.GET, getRequest, Map.class);
+        assertEquals(HttpStatus.OK, trackingResponse.getStatusCode());
+        assertNotNull(trackingResponse.getBody());
+        assertTrue(trackingResponse.getBody().containsKey("status"));
+    }
 }
