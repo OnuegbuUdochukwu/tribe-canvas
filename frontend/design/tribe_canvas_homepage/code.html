@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tribe Canvas</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+      :root {
+        --deep-blue: #0d1e42;
+        --warm-sand: #f4e9d8;
+        --crisp-white: #ffffff;
+        --terracotta-orange: #e57373;
+        --body-text: #5a5a5a;
+      }
+      body {
+        font-family: "Lora", serif;
+        color: var(--body-text);
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Poppins", sans-serif;
+        color: var(--deep-blue);
+      }
+      .btn-primary {
+        background-color: var(--terracotta-orange);
+        color: var(--crisp-white);
+      }
+      .btn-secondary {
+        background-color: transparent;
+        color: var(--deep-blue);
+        border: 1px solid var(--deep-blue);
+      }
+    </style>
+</head>
+<body class="bg-white">
+<div class="relative flex size-full min-h-screen flex-col overflow-x-hidden">
+<header class="sticky top-0 z-50 w-full bg-[var(--crisp-white)] shadow-sm">
+<div class="container mx-auto flex items-center justify-between whitespace-nowrap px-6 py-4">
+<a class="flex items-center gap-2 text-[var(--deep-blue)]" href="#">
+<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.44L19.36 9L12 13.56L4.64 9L12 4.44ZM4 9.87V15.13L11 19.17V11.83L4 9.87ZM13 19.17L20 15.13V9.87L13 11.83V19.17Z"></path>
+</svg>
+<h1 class="text-2xl font-bold">Tribe Canvas</h1>
+</a>
+<nav class="hidden items-center gap-8 md:flex">
+<a class="text-base font-medium text-[var(--deep-blue)] hover:text-[var(--terracotta-orange)] transition-colors" href="#">Explore</a>
+<a class="text-base font-medium text-[var(--deep-blue)] hover:text-[var(--terracotta-orange)] transition-colors" href="#">Artists</a>
+<a class="text-base font-medium text-[var(--deep-blue)] hover:text-[var(--terracotta-orange)] transition-colors" href="#">About</a>
+</nav>
+<div class="flex items-center gap-4">
+<a class="btn-secondary rounded-full px-6 py-2 text-sm font-bold transition-all hover:bg-[var(--deep-blue)] hover:text-white" href="#">Login</a>
+<a class="btn-primary rounded-full px-6 py-2 text-sm font-bold transition-all hover:opacity-90 flex items-center gap-2" href="#">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+              Cart
+            </a>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<section class="relative h-[60vh] min-h-[400px] w-full bg-cover bg-center" style='background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBNC1_4FoQAdwyx-Kg3HG7HqmbTuohHlPYDfH6Dvc1WknnU94hsa74Ff02qq2aR1rUgjDu7CszgXGYd32t0DiQqW9PYJ223PNehSUlS5o6RR8Z50i8bEsjEy0qyyPwdcYMfQbHl3_Iy9NCLqAxrsVKj85PhjwE7rP33Q84oR9wupZTmj8Eo2c0QNsVqv_RpxPGQ68qQC59BpQhwfqr0MZteLEW_zjqfJ3FaVUla_Jz1uWJdm6D76CQ07BO13HsM4Xf5nzLgKJBTg28");'>
+<div class="container mx-auto flex h-full flex-col items-center justify-center px-6 text-center text-white">
+<h1 class="text-4xl font-bold leading-tight md:text-6xl" style="font-family: 'Poppins', sans-serif;">Discover the Soul of Nigeria Through Art</h1>
+<p class="mt-4 max-w-2xl text-lg md:text-xl">A curated platform connecting you with the vibrant and diverse art scene of Nigeria.</p>
+<a class="btn-primary mt-8 rounded-full px-8 py-3 text-lg font-bold transition-all hover:opacity-90" href="#">Explore Art</a>
+</div>
+</section>
+<section class="py-20 bg-[var(--warm-sand)]">
+<div class="container mx-auto px-6">
+<h2 class="mb-12 text-center text-3xl font-bold text-[var(--deep-blue)]">Featured Artists</h2>
+<div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3">
+<div class="group text-center">
+<div class="relative mx-auto h-48 w-48 overflow-hidden rounded-full">
+<img alt="Aisha Bello" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUy8CFR_LxzLPC3HH_j_hw6zxKsL_R_lOcKC86kUbg5qj31upVDbC60CSUkfmUn77DsPvye-8kUe_MiyyrG_6yYceNfRMWUJ1-HCc1I3AhZv6UT5hA1ZeIKzgGmqDlmzdHhdgazFm2tQROI438ww4O7qnpPYewB2M_tKXSKW4NiWdpZlBJ6dEHbCSdq_ZuO3CYbK-36vlSTESBEdrtICPp58l1romanaS1Yy4EUFkPWSwlbZ-cW06MtIpP59q3Ebi5dwS5t5JLmi8"/>
+</div>
+<h3 class="mt-6 text-xl font-semibold text-[var(--deep-blue)]">Aisha Bello</h3>
+<p class="text-[var(--body-text)]">Contemporary Painter</p>
+</div>
+<div class="group text-center">
+<div class="relative mx-auto h-48 w-48 overflow-hidden rounded-full">
+<img alt="Chukwudi Okafor" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCFkvZFZBZXXqcQANRLuG2xeeMl5zRL-O-gExtlzTLzGbf4llII5Fh9DlKQSreH6VQ3p-3FLJtlfpeqHV6AsmwQqxAo9IPmgp3a_to_ZQru33HQqhDHb4nB-R5DGTlo_shVjaxf10atT1atpulpgExfXgLHyj1j5sBhGzlzgwrwYei5cdS9ng8g8z5acMelN5COOAv8SwGg866R18h9J05flJITv00yntl5MsFrgUj31cyXxPF_K09WJQZng-ut_AxZTGXMxMzLcM"/>
+</div>
+<h3 class="mt-6 text-xl font-semibold text-[var(--deep-blue)]">Chukwudi Okafor</h3>
+<p class="text-[var(--body-text)]">Sculptor</p>
+</div>
+<div class="group text-center">
+<div class="relative mx-auto h-48 w-48 overflow-hidden rounded-full">
+<img alt="Ngozi Eze" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPj1NzOU5nCQwZXkBnEbhgbPzmh7C9_AA4UUji-E_I6GbvHtdlthhhhi06OMx-WExV_Wik2m2mY9Cu2G6F79rh9khxF4MrGwjOJrc8LscaprPwklOZo_veByUu7vDFc-DndxC_O5U2fSGJ6Qq6VOXrWFObSHwBKxdAUydLmFiVbT59yKUMcGtjzK7bWw7djko9GtidwOd2X1FX7_Jv7Pinf2IwaRAdVOuE_SRqiZPY-MfuS-lK_qfFWGeCOF-gqtJ_fBxX3ybGdTY"/>
+</div>
+<h3 class="mt-6 text-xl font-semibold text-[var(--deep-blue)]">Ngozi Eze</h3>
+<p class="text-[var(--body-text)]">Mixed Media Artist</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20">
+<div class="container mx-auto px-6">
+<h2 class="mb-12 text-center text-3xl font-bold text-[var(--deep-blue)]">Explore Our Collection</h2>
+<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+<div class="group overflow-hidden rounded-lg shadow-lg">
+<div class="relative">
+<img alt="Artwork" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSmVCbe2m3k6oEobImvGu7dYBZc0gyz95kytHEDAusX9Va86hJ3BeG0c88KVUHLo6JA5Z4HXtoAokLdd6SpeYuDc4wZtioqdUUgTsfY_uYwikCRt-YFqwqtvtC17pcUeHOxv2b_PD9RfeQNqTbznVjMPLwmoln4CvWDKq1MJfFRHXXokrzvxcXc6SzyfnyPnWf6hkXyAqzSuJuL9JukcSsceQrp7c1O5S_JWtKkDBOm_AfQ4r5Z-8WS7aVfc8NLoaD1URhH7SiTh0"/>
+<div class="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-40"></div>
+<div class="absolute bottom-0 left-0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+<h3 class="font-bold text-white">Ethereal Dreams</h3>
+<p class="text-sm text-gray-200">By Jide Adenuga</p>
+</div>
+</div>
+</div>
+<div class="group overflow-hidden rounded-lg shadow-lg">
+<div class="relative">
+<img alt="Artwork" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPGeF4ec0LqOqPXCKUXVn2-B6o562CfaEy82-vRVKM-d6SCTiL-T2MoQqdksBk4-uSV3q9ZecqbEhLz3GWClpnqSRQS7owuvy4BHGmbn_9Y1DXKOWzhc3cyNIIiz2MWDQEGi_5x8GTgflVA7Zq8pG9Sjn8jfQW2MFBTdq11cT3q75o9BHOl8pf9yN9A1zCVdlzOO6djeduP7wUnUY0XCnceqScEac4yqNMY8OrCpg6Ods4GSSu9JbeXLxWNpDwsNfmkPvQGJw8_90"/>
+<div class="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-40"></div>
+<div class="absolute bottom-0 left-0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+<h3 class="font-bold text-white">Urban Pulse</h3>
+<p class="text-sm text-gray-200">By Fatima Lawal</p>
+</div>
+</div>
+</div>
+<div class="group overflow-hidden rounded-lg shadow-lg">
+<div class="relative">
+<img alt="Artwork" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKnLqOCh0m7cGKar202t54e8RitzaFAJ5PLTp77tYO4Eaoor8nEFAZEbB9DmBBXbBl9-97SbmswW1BGyhusR9gb1Hp1E0bLxxUwrgfyARyvUK-hDtRxUPsI8CkyvUrH_BP1ulfCbiWjXezmY4YsdNn4WZvmaJuB87Q6g6lZhgSEas-zCQVpOE1LU6-8SfaA5bTlYNnBi9rHj3gCu48FnOrWQkQIKNYJ6SMsjpgxzKE7v2VFTfLZCdjwCV6h4MISCMsMVfHYgn3Gz4"/>
+<div class="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-40"></div>
+<div class="absolute bottom-0 left-0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+<h3 class="font-bold text-white">Ancestral Voices</h3>
+<p class="text-sm text-gray-200">By Emeka Okoro</p>
+</div>
+</div>
+</div>
+<div class="group overflow-hidden rounded-lg shadow-lg">
+<div class="relative">
+<img alt="Artwork" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5MaDq8B4DUrvsIp4UFuJqU7Zk_30F-kbOgN7KIEDv5HyB40PPg8xF_gBtKBTzBBQ073LcvOjE1kut85zgDOFVr-iEhE14nqgIobcON3agqdbWqbpO1hUXWQj9Sbm7SPQAXfFLwiS-7nwWlK58ZFBx6Mq2_N8BNTV5pVExHJdKm6QPD26BFLLP3GUp_BO57sLtPmb8iQDcP1Mjjq0-lmn2WmYxSuV0xxRsaLWQ7iCdLOWmtP_QUsJLxjYYdimS9cKv7weEKlyztOw"/>
+<div class="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-40"></div>
+<div class="absolute bottom-0 left-0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+<h3 class="font-bold text-white">Golden Horizon</h3>
+<p class="text-sm text-gray-200">By Aisha Bello</p>
+</div>
+</div>
+</div>
+<div class="group overflow-hidden rounded-lg shadow-lg">
+<div class="relative">
+<img alt="Artwork" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBns5ug7llmihwpULk6Jwr1YoBF2y99f5zKuyAeJ0gCzt5e5veAarcoYyicU6V_CgFdFjDFpNzToWgPrXYvOcOCctNGPtSy5nWjKOcRgQiIuI9ZgrABUfWcfLb024dfJlsRE83i_C1MM7VY1TjhyHXHZpUl46dnspBW3QJCTetJuwmqZzxs1RRUQ2Hs4B6GX4KCrKsptMIjj7P-w8ZER9aa2db8J4-1qHQYvFhd_S9W8o2XjljLi9hSEUwdhlAiFrik8osss7TxgvU"/>
+<div class="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-40"></div>
+<div class="absolute bottom-0 left-0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+<h3 class="font-bold text-white">Market Day</h3>
+<p class="text-sm text-gray-200">By Ngozi Eze</p>
+</div>
+</div>
+</div>
+<div class="group overflow-hidden rounded-lg shadow-lg">
+<div class="relative">
+<img alt="Artwork" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClB15_s8i0d2RP1eVCOjZmjg0DYpmGBcb2fk-wZuCWtVXTrBNM76iCsP27Kx0v5TC0bm6yEGf5oHHB_nY2vfQuQsQOgRC5aZJ848AX0Am--RFYSn2EUisqcnQF7FnETdyho-Gb5sbNKaZkga0yUOONQr7OIKFv2WKK72IZYK_pYgTr8SY1NTxJrt1SajymR0kjzlyGvPRvD5VY8mDHNLq-Hn7ZjVQUuQ4vaAx63eMaa_wOTwcAYFJbYOyf9DWj_MM72x8C683b0j4"/>
+<div class="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-40"></div>
+<div class="absolute bottom-0 left-0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+<h3 class="font-bold text-white">Celebration</h3>
+<p class="text-sm text-gray-200">By Chukwudi Okafor</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-[var(--deep-blue)] text-white">
+<div class="container mx-auto px-6 py-12">
+<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+<div>
+<h2 class="text-xl font-bold">Tribe Canvas</h2>
+<p class="mt-4 text-gray-300">Connecting art lovers with Nigerian talent.</p>
+</div>
+<div>
+<h3 class="text-lg font-semibold">Quick Links</h3>
+<ul class="mt-4 space-y-2">
+<li><a class="hover:text-[var(--terracotta-orange)] transition-colors" href="#">Explore</a></li>
+<li><a class="hover:text-[var(--terracotta-orange)] transition-colors" href="#">Artists</a></li>
+<li><a class="hover:text-[var(--terracotta-orange)] transition-colors" href="#">About</a></li>
+<li><a class="hover:text-[var(--terracotta-orange)] transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold">Follow Us</h3>
+<div class="mt-4 flex space-x-4">
+<a class="text-gray-300 hover:text-[var(--terracotta-orange)] transition-colors" href="#">
+<svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+<path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path>
+</svg>
+</a>
+<a class="text-gray-300 hover:text-[var(--terracotta-orange)] transition-colors" href="#">
+<svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+<path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+</svg>
+</a>
+<a class="text-gray-300 hover:text-[var(--terracotta-orange)] transition-colors" href="#">
+<svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+<path clip-rule="evenodd" d="M12.315 2c2.43 0 2.784.011 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.345 2.525c.636-.247 1.363-.416 2.427-.465C9.793 2.01 10.147 2 12.315 2zm0 1.622c-2.403 0-2.73.01-3.688.056-1.004.047-1.58.21-1.95.368-.45.19-.773.428-1.114.773a3.29 3.29 0 00-.773 1.114c-.158.37-.32.946-.368 1.95-.046.958-.056 1.285-.056 3.688s.01 2.73.056 3.688c.047 1.004.21 1.58.368 1.95.19.45.428.773.773 1.114a3.29 3.29 0 001.114.773c.37.158.946.32 1.95.368.958.046 1.285.056 3.688.056s2.73-.01 3.688-.056c1.004-.047 1.58-.21 1.95-.368.45-.19.773-.428 1.114-.773a3.29 3.29 0 00.773-1.114c.158-.37.32-.946.368-1.95.046-.958.056-1.285.056-3.688s-.01-2.73-.056-3.688c-.047-1.004-.21-1.58-.368-1.95a3.29 3.29 0 00-.773-1.114 3.29 3.29 0 00-1.114-.773c-.37-.158-.946-.32-1.95-.368C15.045 3.632 14.715 3.622 12.315 3.622zm0 3.112a5.27 5.27 0 100 10.54 5.27 5.27 0 000-10.54zm0 8.705a3.435 3.435 0 110-6.87 3.435 3.435 0 010 6.87zm6.41-8.525a1.242 1.242 0 11-2.484 0 1.242 1.242 0 012.484 0z" fill-rule="evenodd"></path>
+</svg>
+</a>
+</div>
+</div>
+</div>
+<div class="mt-12 border-t border-gray-700 pt-8 text-center text-gray-400">
+<p>© 2024 Tribe Canvas. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>
