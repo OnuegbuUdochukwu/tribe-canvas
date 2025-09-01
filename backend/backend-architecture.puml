@@ -1,0 +1,40 @@
+@startuml
+!theme spacelab
+actor User
+actor Artist
+actor Admin
+
+User -> UserController: Register/Login
+User -> ArtworkController: View Artworks
+User -> CartController: Manage Cart
+User -> OrderController: Place Order
+User -> PaymentController: Verify Payment
+
+Artist -> ArtworkController: Create/Update/Delete Artwork
+Artist -> PayoutController: Request Payout
+Artist -> OrderController: View Orders
+Artist -> UploadController: Upload Image
+
+Admin -> FulfillmentPartnerController: Manage Partners
+Admin -> OrderController: Update Order Status
+
+UserController --> UserRepository
+ArtworkController --> ArtworkRepository
+ArtworkController --> UserRepository
+OrderController --> OrderRepository
+OrderController --> UserRepository
+OrderController --> ArtworkRepository
+OrderController --> FulfillmentPartnerService
+OrderController --> PaystackService
+OrderController --> WebhookUtil
+PayoutController --> PayoutService
+PayoutController --> UserRepository
+PayoutService --> PayoutRepository
+CartController --> CartService
+CartService --> CartRepository
+UploadController --> S3Service
+
+PaystackService --> "Paystack API"
+S3Service --> "AWS S3"
+
+@enduml

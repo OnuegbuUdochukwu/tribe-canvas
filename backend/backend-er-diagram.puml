@@ -1,0 +1,61 @@
+@startuml
+!theme spacelab
+entity User {
+  UUID id
+  String name
+  String email
+  String passwordHash
+  Role role
+  ...
+}
+entity Artwork {
+  UUID id
+  String title
+  String description
+  BigDecimal price
+  String imageUrl
+  String category
+  UUID artist_id
+  ...
+}
+entity Order {
+  UUID id
+  UUID customer_id
+  String customerEmail
+  String shippingAddress
+  BigDecimal totalAmount
+  String paymentReference
+  Status status
+  ...
+}
+entity Payout {
+  UUID id
+  BigDecimal amount
+  UUID artist_id
+  UUID order_id
+  Status status
+  ...
+}
+entity FulfillmentPartner {
+  UUID id
+  String name
+  String webhookUrl
+  ...
+}
+entity Cart {
+  UUID id
+  UUID user_id
+  ...
+}
+
+User ||--o{ Artwork : "creates"
+User ||--o{ Order : "places"
+User ||--o{ Cart : "has"
+Artwork }o--|| User : "artist"
+Order }o--|| User : "customer"
+Order }o--o{ Artwork : "contains"
+Payout }o--|| User : "artist"
+Payout }o--|| Order : "for"
+Order }o--|| FulfillmentPartner : "fulfilled by"
+Cart }o--o{ Artwork : "contains"
+@enduml
