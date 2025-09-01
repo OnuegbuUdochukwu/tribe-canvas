@@ -2,8 +2,10 @@ package com.codewithudo.backend;
 
 import com.codewithudo.backend.models.Payout;
 import com.codewithudo.backend.models.User;
+import com.codewithudo.backend.repositories.ArtworkRepository;
 import com.codewithudo.backend.repositories.PayoutRepository;
 import com.codewithudo.backend.repositories.UserRepository;
+import com.codewithudo.backend.repositories.OrderRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,17 +25,26 @@ public class ArtistEarningsPayoutsIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private PayoutRepository payoutRepository;
 
+    @Autowired
+    private ArtworkRepository artworkRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
     private User artist;
 
     @BeforeEach
     void setup() {
         payoutRepository.deleteAll();
+        orderRepository.deleteAll(); // Delete orders first to clear order_artworks join table
+        artworkRepository.deleteAll();
         userRepository.deleteAll();
         artist = new User();
         artist.setName("Test Artist");

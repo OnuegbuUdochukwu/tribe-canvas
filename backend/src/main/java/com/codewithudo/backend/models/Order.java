@@ -15,10 +15,11 @@ import java.util.UUID;
 public class Order {
 
     public enum Status {
-        PENDING,
-        IN_PRODUCTION,
-        SHIPPED,
-        DELIVERED
+    PENDING,
+    IN_PRODUCTION,
+    IN_TRANSIT,
+    SHIPPED,
+    DELIVERED
     }
 
     @Id

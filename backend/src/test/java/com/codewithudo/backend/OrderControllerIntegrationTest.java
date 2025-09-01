@@ -35,6 +35,8 @@ public class OrderControllerIntegrationTest {
     private CartRepository cartRepository;
     @MockBean
     private PaystackService paystackService;
+    @Autowired
+    private FulfillmentPartnerRepository fulfillmentPartnerRepository;
 
     private User buyer;
     private Artwork artwork;
@@ -159,5 +161,61 @@ public class OrderControllerIntegrationTest {
         assertEquals(HttpStatus.OK, trackingResponse.getStatusCode());
         assertNotNull(trackingResponse.getBody());
         assertTrue(trackingResponse.getBody().containsKey("status"));
+    }
+
+    @Test
+    void testFulfillmentAndDeliveryFlow() {
+        // 1. Create a fulfillment partner
+        FulfillmentPartner partner = new FulfillmentPartner();
+        partner.setName("Test Partner");
+        partner.setWebhookUrl("http://example.com/webhook");
+        partner.setContactEmail("partner@example.com");
+        partner.setPhone("1234567890");
+        fulfillmentPartnerRepository.save(partner);
+
+        // 2. Mock PaystackService to always return a successful verification
+        PaystackVerificationResponse.PaystackTransactionData data = new PaystackVerificationResponse.PaystackTransactionData();
+        data.setStatus("success");
+        data.setAmount(10000); // 100.00 in Naira (Paystack returns kobo)
+        PaystackVerificationResponse paystackResponse = new PaystackVerificationResponse();
+        paystackResponse.setStatus(true);
+        paystackResponse.setData(data);
+        Mockito.when(paystackService.verifyTransaction(Mockito.anyString())).thenReturn(paystackResponse);
+
+        // 3. Create order
+        String url = "http://localhost:" + port + "/api/orders";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        CheckoutRequest req = new CheckoutRequest();
+        req.setPaymentReference("test-ref");
+        req.setShippingAddress("123 Test St");
+        req.setArtworkIds(List.of(artwork.getId()));
+        HttpEntity<CheckoutRequest> request = new HttpEntity<>(req, headers);
+        ResponseEntity<Order> createResponse = restTemplate.postForEntity(url, request, Order.class);
+        assertEquals(HttpStatus.CREATED, createResponse.getStatusCode());
+        assertNotNull(createResponse.getBody());
+        String orderId = createResponse.getBody().getId().toString();
+
+        // 4. Update delivery status and tracking info
+        String updateUrl = "http://localhost:" + port + "/api/orders/" + orderId + "/status";
+        Map<String, String> updatePayload = new HashMap<>();
+        updatePayload.put("status", "IN_TRANSIT");
+        updatePayload.put("trackingId", "TRACK123");
+        HttpEntity<Map<String, String>> updateRequest = new HttpEntity<>(updatePayload, headers);
+        ResponseEntity<Order> updateResponse = restTemplate.exchange(updateUrl, HttpMethod.PUT, updateRequest, Order.class);
+        assertEquals(HttpStatus.OK, updateResponse.getStatusCode());
+        assertNotNull(updateResponse.getBody());
+        assertEquals("IN_TRANSIT", updateResponse.getBody().getStatus().toString());
+        assertEquals("TRACK123", updateResponse.getBody().getTrackingId());
+
+        // 5. Fetch delivery/tracking info
+        String trackingUrl = "http://localhost:" + port + "/api/orders/" + orderId + "/status";
+        HttpEntity<Void> getRequest = new HttpEntity<>(headers);
+        ResponseEntity<Map> trackingResponse = restTemplate.exchange(trackingUrl, HttpMethod.GET, getRequest, Map.class);
+        assertEquals(HttpStatus.OK, trackingResponse.getStatusCode());
+        assertNotNull(trackingResponse.getBody());
+        assertEquals("IN_TRANSIT", trackingResponse.getBody().get("status").toString());
+        assertEquals("TRACK123", trackingResponse.getBody().get("trackingId"));
     }
 }
