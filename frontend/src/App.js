@@ -21,6 +21,7 @@ import ArtistRegisterPage from "./pages/ArtistRegisterPage";
 import ProductPage from "./pages/ProductPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import BuyerProfilePage from "./pages/BuyerProfilePage";
+import ArtworkUploadForm from "./pages/ArtworkUploadForm";
 
 function App() {
     return (
@@ -74,6 +75,7 @@ function App() {
                                 path="/profile"
                                 element={<BuyerProfilePage />}
                             />
+                            <Route path="/upload-artwork" element={<ArtworkUploadForm />} />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </main>
