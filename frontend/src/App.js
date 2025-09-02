@@ -19,6 +19,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import BuyerRegisterPage from "./pages/BuyerRegisterPage";
 import ArtistRegisterPage from "./pages/ArtistRegisterPage";
 import ProductPage from "./pages/ProductPage";
+import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 
 function App() {
     return (
@@ -47,8 +48,7 @@ function App() {
                             <Route
                                 path="/checkout"
                                 element={<CheckoutPage />}
-                            />{" "}
-                            {/* New route */}
+                            />
                             <Route
                                 path="/orders"
                                 element={<OrderHistoryPage />}
@@ -64,6 +64,10 @@ function App() {
                             <Route
                                 path="/artworks/:id"
                                 element={<ProductPage />}
+                            />
+                            <Route
+                                path="/order-confirmation"
+                                element={<OrderConfirmationPage />}
                             />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
