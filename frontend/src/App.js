@@ -16,6 +16,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ArtistDashboard from "./pages/ArtistDashboard";
 import NotFoundPage from "./pages/NotFoundPage";
+import BuyerRegisterPage from "./pages/BuyerRegisterPage";
+import ArtistRegisterPage from "./pages/ArtistRegisterPage";
 const ProductPage = () => <div>Product Page</div>;
 
 function App() {
@@ -32,6 +34,14 @@ function App() {
                             <Route
                                 path="/register"
                                 element={<RegisterPage />}
+                            />
+                            <Route
+                                path="/register/buyer"
+                                element={<BuyerRegisterPage />}
+                            />
+                            <Route
+                                path="/register/artist"
+                                element={<ArtistRegisterPage />}
                             />
                             <Route path="/cart" element={<CartPage />} />
                             <Route
