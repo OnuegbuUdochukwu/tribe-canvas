@@ -23,6 +23,7 @@ import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import BuyerProfilePage from "./pages/BuyerProfilePage";
 import ArtworkUploadForm from "./pages/ArtworkUploadForm";
 import EditArtworkPage from "./pages/EditArtworkPage";
+import PayoutStatusPage from "./pages/PayoutStatusPage";
 
 function App() {
     return (
@@ -84,6 +85,10 @@ function App() {
                                 path="/edit-artwork"
                                 element={<EditArtworkPage />}
                             />
+                                <Route
+                                    path="/payouts"
+                                    element={<PayoutStatusPage />}
+                                />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </main>
