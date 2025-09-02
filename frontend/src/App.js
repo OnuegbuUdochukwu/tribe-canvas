@@ -85,10 +85,10 @@ function App() {
                                 path="/edit-artwork"
                                 element={<EditArtworkPage />}
                             />
-                                <Route
-                                    path="/payouts"
-                                    element={<PayoutStatusPage />}
-                                />
+                            <Route
+                                path="/payouts"
+                                element={<PayoutStatusPage />}
+                            />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </main>
