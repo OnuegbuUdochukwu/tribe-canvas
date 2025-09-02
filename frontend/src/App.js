@@ -24,6 +24,7 @@ import BuyerProfilePage from "./pages/BuyerProfilePage";
 import ArtworkUploadForm from "./pages/ArtworkUploadForm";
 import EditArtworkPage from "./pages/EditArtworkPage";
 import PayoutStatusPage from "./pages/PayoutStatusPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
     return (
@@ -89,6 +90,7 @@ function App() {
                                 path="/payouts"
                                 element={<PayoutStatusPage />}
                             />
+                            <Route path="/admin" element={<AdminDashboard />} />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </main>
