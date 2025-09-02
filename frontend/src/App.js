@@ -75,7 +75,10 @@ function App() {
                                 path="/profile"
                                 element={<BuyerProfilePage />}
                             />
-                            <Route path="/upload-artwork" element={<ArtworkUploadForm />} />
+                            <Route
+                                path="/upload-artwork"
+                                element={<ArtworkUploadForm />}
+                            />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </main>
