@@ -1,97 +1,295 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import ArtworkCard from "../components/ArtworkCard";
+// New GalleryPage for Tribe Canvas
+const artworks = [
+    {
+        title: "Serene Contemplation",
+        artist: "Tunde Adekunle",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD6-bbzW0a6X1NLVf_xyNo9MpmMvDJfWNC2X1xrVp-X-2vfCiY0WL1Nc6i7OpwIlAwJcEMIMLRmV5ehsJLhjkvFAtNNQ8ODDOQwcTMiVuhE72ej9suj6yR_ZNMVbuft8UqAbCT3mcWoEqsi2B_4_ClJt-KmS_GLkpUdT0Vod1LXGN-Hj2mFYKFSNc_7nYuTdw7ilE7V3QoTZR6t1Xh6MWYfVQkjhPekQ1TWffLXI8z63cERP1JdG9q-oR5jRqz5qY4StzPOobQ2wf0",
+    },
+    {
+        title: "Urban Rhythms",
+        artist: "Chioma Nwosu",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCQBpMpPFuWpwwE0_BhIaZWJHLuiUmK7zyPrnwsj6ZoRtDgi3jrlEqX6hZ0rx9pf4gggFevZwN7bxoBkg_PKKEK8Z9PrBezonr56UH3W0q8T3K6MmvQ88GhUOSbNKSybN6DVOWfLWyn_wqkujUEDg_tjEp1OQsbvN8twAipj5zolL7zA8Kdi4L8D56rvgpLosh1EZzI8cSktGmf08HWNmq7Afx-9GpO_92aCvNAYDDNNcyP73gPZ4XqR1wXBHYvkLnMG_Z3WBQ_Pd4",
+    },
+    {
+        title: "Golden Hour",
+        artist: "Femi Adebayo",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAalyDEAypjEsYJN_ezNJRg5rYmE6Sy_ByI6md8SRdAkVQpNyZTRwcmTj_tgF1DL8JQEGLwwHttZvdepLpB3WhZgGxLOm1-XPuYDWsqlzEKLH4Pio1Q0HzqA2dNxesRkQOGzuazK_oAhHAu-QRw2k19f4rIaEvLEFyeMKbV5PSYa9HBUsjJJ0M2fcZWVqXO72RahocVW8SJ4otghlsS1FLDDMPc3ckufD4jB7Li8AcRPezVUWyocOAoLhrc54N4ADBT43CtnNV6j0Q",
+    },
+    {
+        title: "Abstract Dreams",
+        artist: "Aisha Bello",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBdNGw19DJRxpkkLt2K7THOtV9kvnHOvbN5uMPu86f3Oyagj9aETwDYYXAl6V0HczjP98ILI_E12xPmlOPKqJOcx2UGuuG7X_68GRXLVRR9-z-KfM0dPmTbS7LUuNTbEslWcz_MzBFud8NWUGeITnZ90VqdjyPHpXV7c5ZXoS8JgDsuCOzElJc5yhOnkLMVgPbi-6zYbr3qI0WFuxmtwZ4x--entzgqBXlGw2LN3wBInILKe6dMdAkE50Jw6DRZ5kgEEk0KQTCgdh8",
+    },
+    {
+        title: "Market Day",
+        artist: "Emeka Okafor",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC2WkT0GkwpxU4M0fiCb3cNtLz6bAnex1yWIPnMsnJEDpJo0h_fky0fpcwGyA5_h2HCtJ6bT9f0CSdf__kuThCM70k0SsJLDBD_zybfQQS1wPBP43eB7JYGBB-DyL_5P0UOIEcL01at4ASo79rXqoL0YgHmxE4zt8NpAh6Jlu_iY6F_gc5HC_VXJlgSlYsxu9qbWx_0OV4MDQ_3l9Yb3ATPDUWcw_bLJ_T_1Yu5AdCq0scdt9kyWc_dIDUCYPO9j7p9o4mQfee1ZDQ",
+    },
+    {
+        title: "Reflection",
+        artist: "Ifeoma Okoro",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCQxn3OdTC-Rrm8ntovTDE1jZb-CRDgkn7jyiHSzfU1GG-s3zsUTvirS9PP7hBoobx3xNnY6Gs722q5ULMztzHvZVh2b-AgQZOstVmGdj9AyGpmneZsL2yGlNPWOT2PFxIqhBTtH3PVABzZu1WCzgsJJujhvqTCLL_-LmYSCgznTwAk0fGvSrCV7A1soqnTmpYTW-C7j_DFDm2XQS5ebmq6URLAHd9Y72ACFoQ_mpw2j84bhTALiazM6ayAfELs8sZrYmJU13ybxRk",
+    },
+    {
+        title: "Ethereal Dance",
+        artist: "Musa Sani",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD0H4puXACWZs1Ti8cxMUD3CVOUHJ-cwdiVzw1dklceAVhNY6nEmO7OZzwG3vBlT6JdpfiSob7uf-K_IfevLRVy8iJFID7UEqiUowAs16ksNnOTWcUn2KbKsKgvJcdaghrtuyf1n7SGjGmZ1IoJ9EBzv9CRScT6LeUd3BUCQVB-ZXau2l_JckeIaZhPuAXrh3rX5rsuo0ly1uAH8Dxn3w1KC-Iwe9dILM4A64QlsTQ7O_p8gd9sbmdpqxklpDO3Svus0QKgoQucSc0",
+    },
+    {
+        title: "The Journey",
+        artist: "Zainab Aliyu",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCGYQzxOBwmMZwY6RvohRb5wLRUa9LejDO-h3SGgGle0ADD1O6Petc8gUs0pYgK4FiuXC8-b58Lx66q97c8jIeXYIbX5_qk30ACYbRxtm37M1vROsPlqB5GaWVNH9DfFwnzaXeMqWO4FyViW75Hb1vJo9pkoTFxQxjswRqast2cy3_KLJoh8VoE_UqCca47dQX8d9I_KjvEaHyR3Em-vI5n2dEYbRWAereByAJyQQkF_LTbIRsVukD7LdPsHuWFx425oMAbyYCm-XA",
+    },
+];
 
-const GalleryPage = () => {
-    const [artworks, setArtworks] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [category, setCategory] = useState("");
-    const [tag, setTag] = useState("");
-    const [dimensions, setDimensions] = useState("");
-
-    useEffect(() => {
-        const fetchArtworks = async () => {
-            try {
-                setLoading(true);
-                const params = {};
-                if (searchTerm) params.title = searchTerm;
-                if (category) params.category = category;
-                if (tag) params.tag = tag;
-                if (dimensions) params.dimensions = dimensions;
-                const response = await axios.get(
-                    "http://localhost:8080/api/artworks",
-                    { params }
-                );
-                setArtworks(response.data);
-            } catch (err) {
-                setError("Failed to fetch artworks. Please try again later.");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchArtworks();
-    }, [searchTerm, category, tag, dimensions]);
-
-    if (loading) {
-        return <div className="loading">Loading...</div>;
-    }
-
-    if (error) {
-        return <div className="error-message">{error}</div>;
-    }
-
+export default function GalleryPage() {
     return (
-        <div className="container">
-            <h2>Art Gallery</h2>
-            <div className="filter-controls">
-                <input
-                    type="text"
-                    placeholder="Search by title..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="search-input"
-                />
-                <input
-                    type="text"
-                    placeholder="Tag (e.g. abstract)"
-                    value={tag}
-                    onChange={(e) => setTag(e.target.value)}
-                    className="tag-input"
-                />
-                <input
-                    type="text"
-                    placeholder="Dimensions (e.g. 24x36)"
-                    value={dimensions}
-                    onChange={(e) => setDimensions(e.target.value)}
-                    className="dimensions-input"
-                />
-                <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="category-select"
-                >
-                    <option value="">All Categories</option>
-                    <option value="Photography">Photography</option>
-                    <option value="Painting">Painting</option>
-                    <option value="Digital Art">Digital Art</option>
-                </select>
-            </div>
-            <div className="gallery-grid">
-                {artworks.length > 0 ? (
-                    artworks.map((artwork) => (
-                        <ArtworkCard key={artwork.id} artwork={artwork} />
-                    ))
-                ) : (
-                    <p className="no-artworks-message">
-                        No artworks found. Try a different search term.
+        <div className="min-h-screen bg-white font-sans">
+            <header className="flex items-center justify-between border-b border-gray-200 px-10 py-4">
+                <div className="flex items-center gap-10">
+                    <div className="flex items-center gap-3">
+                        {/* Logo SVG */}
+                        <svg
+                            className="h-8 w-8 text-blue-500"
+                            fill="none"
+                            viewBox="0 0 48 48"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z"
+                                fill="currentColor"
+                            ></path>
+                            <path
+                                clipRule="evenodd"
+                                d="M10.4485 13.8519C10.4749 13.9271 10.6203 14.246 11.379 14.7361C12.298 15.3298 13.7492 15.9145 15.6717 16.3735C18.0007 16.9296 20.8712 17.2655 24 17.2655C27.1288 17.2655 29.9993 16.9296 32.3283 16.3735C34.2508 15.9145 35.702 15.3298 36.621 14.7361C37.3796 14.246 37.5251 13.9271 37.5515 13.8519C37.5287 13.7876 37.4333 13.5973 37.0635 13.2931C36.5266 12.8516 35.6288 12.3647 34.343 11.9175C31.79 11.0295 28.1333 10.4437 24 10.4437C19.8667 10.4437 16.2099 11.0295 13.657 11.9175C12.3712 12.3647 11.4734 12.8516 10.9365 13.2931C10.5667 13.5973 10.4713 13.7876 10.4485 13.8519ZM37.5563 18.7877C36.3176 19.3925 34.8502 19.8839 33.2571 20.2642C30.5836 20.9025 27.3973 21.2655 24 21.2655C20.6027 21.2655 17.4164 20.9025 14.7429 20.2642C13.1498 19.8839 11.6824 19.3925 10.4436 18.7877V34.1275C10.4515 34.1545 10.5427 34.4867 11.379 35.027C12.298 35.6207 13.7492 36.2054 15.6717 36.6644C18.0007 37.2205 20.8712 37.5564 24 37.5564C27.1288 37.5564 29.9993 37.2205 32.3283 36.6644C34.2508 36.2054 35.702 35.6207 36.621 35.027C37.4573 34.4867 37.5485 34.1546 37.5563 34.1275V18.7877ZM41.5563 13.8546V34.1455C41.5563 36.1078 40.158 37.5042 38.7915 38.3869C37.3498 39.3182 35.4192 40.0389 33.2571 40.5551C30.5836 41.1934 27.3973 41.5564 24 41.5564C20.6027 41.5564 17.4164 41.1934 14.7429 40.5551C12.5808 40.0389 10.6502 39.3182 9.20848 38.3869C7.84205 37.5042 6.44365 36.1078 6.44365 34.1455L6.44365 13.8546C6.44365 12.2684 7.37223 11.0454 8.39581 10.2036C9.43325 9.3505 10.8137 8.67141 12.343 8.13948C15.4203 7.06909 19.5418 6.44366 24 6.44366C28.4582 6.44366 32.5797 7.06909 35.657 8.13948C37.1863 8.67141 38.5667 9.3505 39.6042 10.2036C40.6278 11.0454 41.5563 12.2684 41.5563 13.8546Z"
+                                fill="currentColor"
+                                fillRule="evenodd"
+                            ></path>
+                        </svg>
+                        <span className="text-2xl font-bold text-gray-900">
+                            Tribe Canvas
+                        </span>
+                    </div>
+                    <nav className="flex items-center gap-8">
+                        <a
+                            className="text-gray-900 text-base font-medium hover:text-blue-500 transition-colors"
+                            href="/gallery"
+                        >
+                            Shop
+                        </a>
+                        <a
+                            className="text-gray-900 text-base font-medium hover:text-blue-500 transition-colors"
+                            href="/artists"
+                        >
+                            Artists
+                        </a>
+                        <a
+                            className="text-gray-900 text-base font-medium hover:text-blue-500 transition-colors"
+                            href="/about"
+                        >
+                            About
+                        </a>
+                        <a
+                            className="text-gray-900 text-base font-medium hover:text-blue-500 transition-colors"
+                            href="/contact"
+                        >
+                            Contact
+                        </a>
+                    </nav>
+                </div>
+                <div className="flex items-center gap-4">
+                    <div className="relative">
+                        <input
+                            className="form-input w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-gray-100 px-10 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Search"
+                        />
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg
+                                className="h-5 w-5 text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <button className="flex items-center justify-center rounded-lg bg-transparent p-2 text-gray-900 transition-colors hover:bg-gray-100">
+                            {/* Heart Icon */}
+                            <svg
+                                fill="currentColor"
+                                height="24"
+                                viewBox="0 0 256 256"
+                                width="24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path d="M213.38,139.08l-45.43-80a16,16,0,0,0-14.07-9.08H102.12a16,16,0,0,0-14.07,9.08l-45.43,80a16,16,0,0,0,14.07,22.92H200a16,16,0,0,0,13.38-22.92ZM128,64h64.24l30.29,53.33H33.47L63.76,64H96v16a8,8,0,0,0,16,0V64h16Zm71.55,88H56.45a.53.53,0,0,1-.44-.2A.51.51,0,0,1,56,151.5a.49.49,0,0,1,.45-.33H199.55a.49.49,0,0,1,.45.33.51.51,0,0,1-.07.47A.53.53,0,0,1,199.55,152Z" />
+                            </svg>
+                        </button>
+                        <button className="flex items-center justify-center rounded-lg bg-transparent p-2 text-gray-900 transition-colors hover:bg-gray-100">
+                            {/* Heart Icon */}
+                            <svg
+                                fill="currentColor"
+                                height="24"
+                                viewBox="0 0 256 256"
+                                width="24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32ZM128,206.8C109.74,196.16,32,147.69,32,94A46.06,46.06,0,0,1,78,48c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,147.61,146.24,196.15,128,206.8Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div className="mb-10 text-center">
+                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+                        Artwork Catalog
+                    </h1>
+                    <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-500">
+                        Discover unique art prints from talented Nigerian
+                        artists. Use the filters to find your perfect piece.
                     </p>
-                )}
-            </div>
+                </div>
+                <div className="mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div className="relative w-full sm:max-w-xs">
+                        <input
+                            className="form-input w-full rounded-lg border-gray-300 bg-white py-2 pl-10 pr-4 text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500"
+                            placeholder="Search for art..."
+                            type="search"
+                        />
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg
+                                className="h-5 w-5 text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-4">
+                        {["Artist", "Style", "Color", "Orientation"].map(
+                            (filter) => (
+                                <button
+                                    key={filter}
+                                    className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50"
+                                >
+                                    <span>{filter}</span>
+                                    <svg
+                                        className="h-5 w-5 text-gray-400"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            clipRule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            fillRule="evenodd"
+                                        />
+                                    </svg>
+                                </button>
+                            )
+                        )}
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {artworks.map((art, idx) => (
+                        <div
+                            key={idx}
+                            className="group relative overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                        >
+                            <div className="aspect-w-3 aspect-h-4">
+                                <img
+                                    alt={art.title}
+                                    className="h-full w-full object-cover"
+                                    src={art.image}
+                                />
+                            </div>
+                            <div className="absolute inset-0 bg-black bg-opacity-0 transition-opacity group-hover:bg-opacity-50"></div>
+                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <h3 className="text-lg font-bold text-white">
+                                    {art.title}
+                                </h3>
+                                <p className="text-sm text-gray-300">
+                                    By {art.artist}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className="mt-12 flex justify-center">
+                    <nav className="flex items-center space-x-1 rounded-lg bg-white p-1 shadow-sm">
+                        <button className="rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-700">
+                            <span className="sr-only">Previous</span>
+                            <svg
+                                aria-hidden="true"
+                                className="h-5 w-5"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    clipRule="evenodd"
+                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                    fillRule="evenodd"
+                                />
+                            </svg>
+                        </button>
+                        <button className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white">
+                            1
+                        </button>
+                        <button className="rounded-md px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            2
+                        </button>
+                        <button className="rounded-md px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            3
+                        </button>
+                        <span className="px-4 py-2 text-sm font-medium text-gray-500">
+                            ...
+                        </span>
+                        <button className="rounded-md px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            8
+                        </button>
+                        <button className="rounded-md px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            9
+                        </button>
+                        <button className="rounded-md px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            10
+                        </button>
+                        <button className="rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-700">
+                            <span className="sr-only">Next</span>
+                            <svg
+                                aria-hidden="true"
+                                className="h-5 w-5"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    clipRule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    fillRule="evenodd"
+                                />
+                            </svg>
+                        </button>
+                    </nav>
+                </div>
+            </main>
         </div>
     );
-};
-
-export default GalleryPage;
+}
