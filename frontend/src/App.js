@@ -18,7 +18,7 @@ import ArtistDashboard from "./pages/ArtistDashboard";
 import NotFoundPage from "./pages/NotFoundPage";
 import BuyerRegisterPage from "./pages/BuyerRegisterPage";
 import ArtistRegisterPage from "./pages/ArtistRegisterPage";
-const ProductPage = () => <div>Product Page</div>;
+import ProductPage from "./pages/ProductPage";
 
 function App() {
     return (
