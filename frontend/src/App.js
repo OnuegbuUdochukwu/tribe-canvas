@@ -22,6 +22,7 @@ import ProductPage from "./pages/ProductPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import BuyerProfilePage from "./pages/BuyerProfilePage";
 import ArtworkUploadForm from "./pages/ArtworkUploadForm";
+import EditArtworkPage from "./pages/EditArtworkPage";
 
 function App() {
     return (
@@ -78,6 +79,10 @@ function App() {
                             <Route
                                 path="/upload-artwork"
                                 element={<ArtworkUploadForm />}
+                            />
+                            <Route
+                                path="/edit-artwork"
+                                element={<EditArtworkPage />}
                             />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
