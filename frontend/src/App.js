@@ -5,26 +5,27 @@ import { CartProvider } from "./CartContext";
 import NavBar from "./components/NavBar";
 import PrivateRoute from "./components/PrivateRoute";
 import "./index.css";
-import CartPage from "./pages/CartPage";
-import CheckoutPage from "./pages/CheckoutPage"; // New import
-import OrderHistoryPage from "./pages/OrderHistoryPage";
+
+import CartPage from "../pages/CartPage";
+import CheckoutPage from "../pages/CheckoutPage";
+import OrderHistoryPage from "../pages/OrderHistoryPage";
 
 // Placeholder pages
-import HomePage from "./pages/HomePage";
-import GalleryPage from "./pages/GalleryPage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import ArtistDashboard from "./pages/ArtistDashboard";
-import NotFoundPage from "./pages/NotFoundPage";
-import BuyerRegisterPage from "./pages/BuyerRegisterPage";
-import ArtistRegisterPage from "./pages/ArtistRegisterPage";
-import ProductPage from "./pages/ProductPage";
-import OrderConfirmationPage from "./pages/OrderConfirmationPage";
-import BuyerProfilePage from "./pages/BuyerProfilePage";
-import ArtworkUploadForm from "./pages/ArtworkUploadForm";
-import EditArtworkPage from "./pages/EditArtworkPage";
-import PayoutStatusPage from "./pages/PayoutStatusPage";
-import AdminDashboard from "./pages/AdminDashboard";
+import HomePage from "../pages/HomePage";
+import GalleryPage from "../pages/GalleryPage";
+import LoginPage from "../pages/LoginPage";
+import RegisterPage from "../pages/RegisterPage";
+import ArtistDashboard from "../pages/ArtistDashboard";
+import NotFoundPage from "../pages/NotFoundPage";
+import BuyerRegisterPage from "../pages/BuyerRegisterPage";
+import ArtistRegisterPage from "../pages/ArtistRegisterPage";
+import ProductPage from "../pages/ProductPage";
+import OrderConfirmationPage from "../pages/OrderConfirmationPage";
+import BuyerProfilePage from "../pages/BuyerProfilePage";
+import ArtworkUploadForm from "../pages/ArtworkUploadForm";
+import EditArtworkPage from "../pages/EditArtworkPage";
+import PayoutStatusPage from "../pages/PayoutStatusPage";
+import AdminDashboard from "../pages/AdminDashboard";
 
 function App() {
     return (
