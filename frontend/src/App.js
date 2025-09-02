@@ -15,6 +15,7 @@ import GalleryPage from "./pages/GalleryPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ArtistDashboard from "./pages/ArtistDashboard";
+import NotFoundPage from "./pages/NotFoundPage";
 const ProductPage = () => <div>Product Page</div>;
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
                                 path="/artworks/:id"
                                 element={<ProductPage />}
                             />
+                            <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </main>
                 </div>
