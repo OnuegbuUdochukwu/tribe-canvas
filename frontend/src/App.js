@@ -20,6 +20,7 @@ import BuyerRegisterPage from "./pages/BuyerRegisterPage";
 import ArtistRegisterPage from "./pages/ArtistRegisterPage";
 import ProductPage from "./pages/ProductPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+import BuyerProfilePage from "./pages/BuyerProfilePage";
 
 function App() {
     return (
@@ -68,6 +69,10 @@ function App() {
                             <Route
                                 path="/order-confirmation"
                                 element={<OrderConfirmationPage />}
+                            />
+                            <Route
+                                path="/profile"
+                                element={<BuyerProfilePage />}
                             />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
