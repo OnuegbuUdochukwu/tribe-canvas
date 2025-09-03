@@ -2,37 +2,37 @@ const artworks = [
     {
         title: "Dreamscape",
         artist: "Ada Lovelace",
-        image: require("../design/tribe_canvas_homepage/artwork1.png"),
+        image: require("../assets/tribe_canvas_homepage/artwork1.png"),
         price: "1.2 ETH",
     },
     {
         title: "Urban Jungle",
         artist: "Banksy",
-        image: require("../design/tribe_canvas_homepage/artwork2.png"),
+        image: require("../assets/tribe_canvas_homepage/artwork2.png"),
         price: "2.5 ETH",
     },
     {
         title: "Infinity Dots",
         artist: "Yayoi Kusama",
-        image: require("../design/tribe_canvas_homepage/artwork3.png"),
+        image: require("../assets/tribe_canvas_homepage/artwork3.png"),
         price: "0.9 ETH",
     },
     {
         title: "Neo Expression",
         artist: "Jean-Michel Basquiat",
-        image: require("../design/tribe_canvas_homepage/artwork4.png"),
+        image: require("../assets/tribe_canvas_homepage/artwork4.png"),
         price: "3.1 ETH",
     },
     {
         title: "Viva La Vida",
         artist: "Frida Kahlo",
-        image: require("../design/tribe_canvas_homepage/artwork5.png"),
+        image: require("../assets/tribe_canvas_homepage/artwork5.png"),
         price: "1.8 ETH",
     },
     {
         title: "Color Burst",
         artist: "Ada Lovelace",
-        image: require("../design/tribe_canvas_homepage/artwork6.png"),
+        image: require("../assets/tribe_canvas_homepage/artwork6.png"),
         price: "1.0 ETH",
     },
 ];

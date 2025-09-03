@@ -10,8 +10,12 @@ export const CartProvider = ({ children }) => {
       // Check if item is already in cart
       const existingItem = prevItems.find((item) => item.id === artwork.id);
       if (existingItem) {
-        // We can handle quantity here if we add that feature
-        return prevItems;
+        // Update quantity if item already exists
+        return prevItems.map((item) =>
+          item.id === artwork.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
       }
       return [...prevItems, { ...artwork, quantity: 1 }];
     });
@@ -21,12 +25,22 @@ export const CartProvider = ({ children }) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== artworkId));
   };
 
+  const updateQuantity = (artworkId, newQuantity) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === artworkId
+          ? { ...item, quantity: newQuantity }
+          : item
+      )
+    );
+  };
+
   const clearCart = () => {
     setCartItems([]);
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   );

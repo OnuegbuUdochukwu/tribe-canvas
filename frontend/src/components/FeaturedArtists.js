@@ -1,44 +1,52 @@
 const artists = [
     {
         name: "Ada Lovelace",
-        avatar: require("../design/tribe_canvas_homepage/artist1.png"),
+        avatar: require("../assets/tribe_canvas_homepage/artist1.png"),
+        role: "Digital Visionary",
     },
     {
         name: "Banksy",
-        avatar: require("../design/tribe_canvas_homepage/artist2.png"),
+        avatar: require("../assets/tribe_canvas_homepage/artist2.png"),
+        role: "Street Artist",
     },
     {
         name: "Yayoi Kusama",
-        avatar: require("../design/tribe_canvas_homepage/artist3.png"),
+        avatar: require("../assets/tribe_canvas_homepage/artist3.png"),
+        role: "Avant-garde Painter",
     },
     {
         name: "Jean-Michel Basquiat",
-        avatar: require("../design/tribe_canvas_homepage/artist4.png"),
+        avatar: require("../assets/tribe_canvas_homepage/artist4.png"),
+        role: "Neo-expressionist",
     },
     {
         name: "Frida Kahlo",
-        avatar: require("../design/tribe_canvas_homepage/artist5.png"),
+        avatar: require("../assets/tribe_canvas_homepage/artist5.png"),
+        role: "Surrealist Icon",
     },
 ];
 
 export default function FeaturedArtists() {
     return (
-        <section className="py-12 bg-white">
-            <div className="container mx-auto px-4">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        <section className="py-20 bg-[#f4e9d8]">
+            <div className="container mx-auto px-6">
+                <h2 className="mb-12 text-center text-3xl font-bold text-[#0d1e42]">
                     Featured Artists
                 </h2>
-                <div className="flex flex-wrap justify-center gap-8">
+                <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3">
                     {artists.map((artist, idx) => (
-                        <div key={idx} className="flex flex-col items-center">
-                            <img
-                                src={artist.avatar}
-                                alt={artist.name}
-                                className="w-20 h-20 rounded-full object-cover border-4 border-indigo-200 shadow mb-2"
-                            />
-                            <span className="text-gray-700 font-medium">
+                        <div key={idx} className="group text-center">
+                            <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full shadow-lg transition-transform duration-300 group-hover:scale-110">
+                                <img
+                                    src={artist.avatar}
+                                    alt={artist.name}
+                                    className="h-full w-full object-cover"
+                                />
+                            </div>
+                            <h3 className="mt-6 text-xl font-semibold text-[#0d1e42]">
                                 {artist.name}
-                            </span>
+                            </h3>
+                            <p className="text-[#5a5a5a]">{artist.role}</p>
                         </div>
                     ))}
                 </div>

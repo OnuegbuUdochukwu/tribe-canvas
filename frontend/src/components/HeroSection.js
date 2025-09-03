@@ -25,7 +25,7 @@ export default function HeroSection() {
                 {/* Right: Hero Image */}
                 <div className="flex-1 flex justify-center md:justify-end">
                     <img
-                        src={require("../design/tribe_canvas_homepage/hero-art.png")} // Replace with actual image path
+                        src={require("../assets/tribe_canvas_homepage/hero-art.png")} // Replace with actual image path
                         alt="Hero Art"
                         className="w-full max-w-md rounded-2xl shadow-lg object-cover"
                     />
