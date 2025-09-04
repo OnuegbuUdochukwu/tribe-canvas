@@ -2,12 +2,14 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
 
-test("renders welcome message on home page", () => {
+test("renders home page headline", () => {
     render(
         <MemoryRouter>
             <App />
         </MemoryRouter>
     );
-    const welcomeElement = screen.getByText(/Welcome to Tribe Canvas/i);
-    expect(welcomeElement).toBeInTheDocument();
+    const headline = screen.getByText(
+        /Discover the Soul of Nigeria Through Art/i
+    );
+    expect(headline).toBeInTheDocument();
 });
